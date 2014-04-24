@@ -1,0 +1,29 @@
+- title @kommune.name
+
+.large-8.medium-8.columns
+  .shape.filter
+    .row
+      .large-2.columns
+        %b
+          = @kommune.name
+      .large-10.columns
+        .filter-quartiere{:style => "margin-top: -4px;"}
+          %b
+          = select_tag 'quarters', options_from_collection_for_select(@quarters, 'coordinates', 'name'), class: 'chosen', include_blank: true, data: { optional: true, placeholder: 'Ortsteil auswählen'}
+      .large-6.columns
+        -#.kommune{style: "float: right;"}
+          %span#kommune{style: "font-weight: bold;"}
+            = @quarter.kommune
+  .box-center
+    #map.kommune-page{:style => "width: auto;height: 450px; border: 1px solid #ccc;", :data => { coords: [@kommune.latitude, @kommune.longitude], initiatives: @initiatives.to_json, antraeges: @antraeges.to_json, constructions: @constructions.to_json }}
+    #spinner
+
+  #seitenverweis
+
+.large-4.medium-4.columns
+  = render 'widgets/recent_initiatives'
+  = render 'widgets/start_initiative'
+
+
+= render 'initiatives/markers', initiatives: @initiatives
+

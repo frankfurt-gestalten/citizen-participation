@@ -1,0 +1,28 @@
+!!!
+/ paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+/[if lt IE 7 ] <html class="ie6" lang="en">
+/[if IE 7 ] <html class="ie7" lang="en">
+/[if IE 8 ] <html class="ie8" lang="en">
+/ [if (gte IE 9)|!(IE)]><!
+%html{:lang => "de"}
+  / <![endif]
+  = render "/layouts/header"
+  %body{:class => (content_for?(:type) ? yield(:type) : "")}
+    = render 'layouts/topframe'
+    .section
+      = render "/layouts/section"
+      .row.initiativen.index
+        .large-8.columns
+          .shape.filter
+            = render 'shared/location_dropdowns', :types => 'construction'
+          #map{:style => "width: auto; height: 450px; border: 1px solid #ccc;"}
+        .large-4.columns
+          .holder-list
+            .pad-con
+              = render_widgets 'sidebar'
+      .roe
+        .large-12.columns
+          = yield
+
+      = render "/layouts/footer"
+      = render '/layouts/footer_js'

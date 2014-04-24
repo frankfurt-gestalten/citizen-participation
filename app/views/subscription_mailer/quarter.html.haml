@@ -1,0 +1,19 @@
+%h1
+  Ortsteil-Abo:
+- @models.each do |model_class, updates|
+  - if updates[:new].present?
+    %h3
+      = t("new_#{model_class.name.downcase}")
+    %ul
+      - updates[:new].each do |model|
+        %li
+          = link_to model.title, root_url + url_for(model)
+  - if updates[:updated].present?
+    %h3
+      = t("updated_#{model_class.name.downcase}")
+    %ul
+      - updates[:updated].each do |model|
+        %li
+          = link_to model.title, root_url + url_for(model)
+
+= render "/initiativen_mailer/signatur"

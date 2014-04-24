@@ -1,0 +1,19 @@
+= form_tag(markers_path, :method => :get) do
+  - types = types.is_a?(Array) ? types : [types]
+  - types.each do |type|
+    = hidden_field_tag 'types[]', type
+
+  = content_tag 'div', '', data: { kommunen: @kommunen },
+    style: 'display:none'
+  = select_tag 'kommune',
+    options_from_collection_for_select(@kommunen, 'id',
+      'name', @kommune_id), class: 'chosen', include_blank: true,
+      data: { optional: true, placeholder: 'Ort auswählen'},
+      :style => "width: 200px;"
+  = content_tag 'div', '', data: { quarters: @quarters_id_to_location },
+    style: 'display:none'
+  = select_tag 'quarter',
+    options_from_collection_for_select(@quarters, 'id',
+      'name', @quarter_id), class: 'chosen', include_blank: true,
+      data: { optional: true, placeholder: 'Ortsteil auswählen'},
+      :style => "width: 200px;"

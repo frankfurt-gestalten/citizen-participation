@@ -1,0 +1,20 @@
+!!!
+/ paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+/[if lt IE 7 ] <html class="ie6" lang="en">
+/[if IE 7 ] <html class="ie7" lang="en">
+/[if IE 8 ] <html class="ie8" lang="en">
+/ [if (gte IE 9)|!(IE)]><!
+%html{:lang => "de"}
+  / <![endif]
+  = render "/layouts/header"
+  %body{:class => (content_for?(:type) ? yield(:type) : "")}
+    = render 'layouts/topframe'
+    .section
+      = render "/layouts/section"
+      .row
+        = yield
+        = render_widgets 'content_bottom'
+      = render "/layouts/footer"
+      = render '/layouts/footer_js'
+
+

@@ -1,0 +1,15 @@
+.holder-list
+  %h3.title.first Neue Initiativen
+  %ul
+    - @initiatives.recent.each do |initiative|
+      %li
+        %span
+          - if initiative.user
+            - if current_user
+              = link_to initiative.user.username, profile_path(initiative.user)
+            - else
+              = link_to initiative.user.username, '#', "data-reveal-id" => "login-window"
+            %br/
+        = link_to initiative_path(initiative) do
+          = truncate(initiative.title, :length => 80, :omission => '...')
+  = link_to "Alle Initiativen", initiatives_path, :class => "alle"

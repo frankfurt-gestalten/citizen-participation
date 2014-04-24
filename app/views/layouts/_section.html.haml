@@ -1,0 +1,21 @@
+.row
+  .large-12.columns.box-pin
+    #bg1.end-pin
+      = link_to "", initiatives_path
+    #bg2.end-pin
+      = link_to "", antraeges_path
+    #bg3.end-pin
+      = link_to "", constructions_path
+    #bg4.end-pin
+      = link_to "", neuigkeitens_path
+.row
+  .large-10.columns.large-centered.centered.spacetop
+    - if flash[:notice]
+      .alert-box.round.success
+        = flash[:notice]
+    - if flash[:alert]
+      .alert-box.round
+        = flash[:alert]
+    - if flash[:error]
+      .alert-box.alert.round
+        = flash[:error]

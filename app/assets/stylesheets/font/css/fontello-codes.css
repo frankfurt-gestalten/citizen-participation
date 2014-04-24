@@ -1,0 +1,10 @@
+
+.icon-initiative:before { content: '\31'; } /* '1' */
+.icon-info:before { content: '\32'; } /* '2' */
+.icon-baustelle:before { content: '\33'; } /* '3' */
+.icon-stern:before { content: '\34'; } /* '4' */
+.icon-search:before { content: '\35'; } /* '5' */
+.icon-twitter:before { content: '\36'; } /* '6' */
+.icon-facebook:before { content: '\37'; } /* '7' */
+.icon-rss:before { content: '\38'; } /* '8' */
+.icon-pfeil:before { content: '\39'; } /* '9' */
