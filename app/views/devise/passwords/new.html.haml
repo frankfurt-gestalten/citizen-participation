@@ -1,0 +1,18 @@
+= title "Neues Passwort"
+
+.row.user
+  .large-10.large-offset-3.columns.shape.bright-grey
+    %h2
+      Passwort vergessen
+    = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+      = devise_error_messages!
+      .row
+        .large-12.columns
+          E-Mail
+          = f.email_field :email
+      .row
+        .large-12.columns
+          = f.submit "Passwort schicken", :class => "button radius"
+      .row
+        .large-12.columns.spacebottom
+          = render "devise/shared/links"

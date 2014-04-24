@@ -1,0 +1,57 @@
+= nested_form_for(@widget, :html => { :class => 'custom', :multipart => true }) do |f|
+  - if @widget.errors.any?
+    #error_explanation
+      %ul
+        - @widget.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    %h3
+      = f.label "Typ", :class => ''
+    = select(:widget, :type, [['Statischer Block', 'static'],['Letzte Kommentare', 'recent_comments'],['Letzte Veranstaltungen', 'recent_neuigkeiten'], ['Neue Initiativen','recent_iniatives'], ['Aktive Initiativen','recent_updated_initiatives'], ['Knopf Initiative starten', 'start_iniative'],['Neue Vorlagen', 'recent_vorlagen'], ['Newsletter signup', 'newsletter_signup']])
+    %h3
+      = f.label "Name", :class => ''
+    = f.text_field :name, :class => ''
+    %h3
+      = f.label "Titel", :class => ''
+    = f.text_field :title, :class => ''
+    %h3
+      = f.label "Inhalt", :class => ''
+    = f.text_area :content, :class => '', :id => 'redactor_content'
+    %h2
+      Sichtbarkeit
+    = f.fields_for :placements do |d|
+      .shape.grey
+        %h3
+          = d.label "Einzel- oder Index", :class => ''
+        = d.select(:action, [['index', 'index'],['show', 'show'],['start', 'start']])
+        %h3
+          = d.label "Bereiche", :class => ''
+        = d.select(:controller, [['Initiativen', 'initiatives'],['Normale Seiten', 'pages'],['Veranstaltungen', 'neuigkeiten'],['Ratsinfo', 'antraeges'],['Quartier', 'quarters'],['Kommune', 'kommunens']])
+        %h3
+          = d.label "Layout", :class => ''
+        = d.select(:position, [['Rechte Spalte', 'sidebar'], ['Unter dem Inhalt','content_bottom'], ['Nirgends', 'nil']])
+        %h3
+          = d.label "Reihenfolge", :class => ''
+        = d.select(:weight, [['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5]])
+        %label{:for => "checkbox"}
+          = d.check_box :_destroy, :style => "display: none;", :id => "checkbox"
+          %span{:class => "custom checkbox"}
+          %b Löschen
+
+    = f.link_to_add "Platzierung", :placements, :class => "button radius secondary"
+
+    .submit
+      = f.submit "Speichern", :class => 'button'
+      %span.cancel
+        oder
+      = link_to "Abbrechen", widgets_url, :class => 'cancel'
+
+
+= content_for :footer do
+  :javascript
+    $(document).ready(
+      function()
+      {
+        $('#redactor_content').redactor({ lang: 'de', buttons: ['html','formatting','bold','italic','underline','|','unorderedlist', 'orderedlist','outdent','indent','|','link','table','image','fontcolor']});
+      }
+    );

@@ -1,0 +1,15 @@
+.row
+  .large-10.columns
+    = form_for([commentable, Comment.new()], :html => {:class => 'comment' }) do |f|
+      - unless current_user
+        = f.text_field :user_name, :placeholder => "Name"
+        = f.text_field :user_email, :placeholder => "E-Mail"
+      = f.text_area :content, :class => 'smaller-textarea', :placeholder => "Kommentar hinzufügen"
+      - unless current_user
+        .row
+          .large-8.columns
+            = recaptcha_tags
+          .large-4.columns
+            Spam-Filter umgehen?
+            = link_to "Einfach Mitglied  werden!", new_registration_path('user')
+      = f.submit "Speichern", :class => 'button radius'

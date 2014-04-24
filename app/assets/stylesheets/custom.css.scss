@@ -1,0 +1,636 @@
+////// General ////////
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,300italic);
+
+
+body, html {
+  background-color: #eeeeee;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+$blue: #1e5073 !default;
+$orange: #E96300 !default;
+
+$construction: #00ba1b;
+$antraege: #37a9dc;
+$initiative: #d53e2a;
+
+a {
+font-weight: 400;
+color: $orange;
+}
+
+h2 a, h3 a  {
+  color: $blue;
+}
+
+.construction-back {
+  background-color: $construction;
+}
+
+.antraege-back {
+  background-color: $antraege;
+}
+
+.initiative-back {
+  background-color: $initiative;
+}
+
+.bright-grey {background-color: #eeeeee;}
+.orange {
+  color: $orange;
+}
+
+.blue-back {
+background-color: $blue;
+}
+
+#main {
+  background-color: #ffffff;
+  padding: 20px 10px 20px 10px;
+  margin-top: -20px;
+
+  /*padding: 10px;
+  -moz-box-shadow: 0px 0px 10px #ccc;
+  -webkit-box-shadow: 0px 0px 10px #ccc;
+  box-shadow: 0px 0px 10px #ccc;*/
+}
+
+#footer {
+  padding-bottom: 40px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.reveal-modal {
+  z-index: 1000;
+}
+
+a.has-tip, a.has-tip:hover {
+  color: #ffffff;
+}
+
+.avatar {
+  border-radius: 150px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+  }
+
+  p, ol, ul {
+  font-weight: 300;
+  }
+
+h1 {
+  margin-bottom: 15px;
+}
+
+////// $Header ////////
+
+.topframe {
+  background-color: $blue;
+}
+
+.nav-frame {
+  background-color: $orange;
+  height: 41px;
+}
+
+.nav {
+  margin-top: 25px;
+}
+
+#login .button {
+  background-color: #eeeeee;
+  color: $blue;
+  margin-top: -3px;
+}
+
+#login .fa, #login .fa, #login .fa {
+  font-size: 18px;
+  color: #eeeeee;
+  padding-right: 5px;
+}
+
+#login .social-media {
+  white-space: nowrap;
+}
+
+#drop1 li a {
+  color: $blue;
+}
+
+#logo {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+#skyline {
+margin-top: 21px;
+}
+
+#login {
+  margin-top: 18px;
+  color: #ffffff;
+}
+
+#login a {
+  color: #ffffff;
+  font-size: 13px;
+}
+
+//////// $Users /////////
+
+.user a {
+  color: $blue;
+  font-weight: 300;
+}
+
+//////// $Forms /////////
+
+.initiative label {
+  font-size: 1em;
+}
+
+.submit {
+  margin-top: 10px;
+}
+
+input[type=text], input[type=email], input[type=password]  {
+    font-size: 24px;
+    height: 40px;
+}
+
+textarea {
+  font-size: 18px;
+  height: auto;
+}
+
+textarea.smaller-textarea {
+  height: 100px;
+}
+
+//////// $buttons /////////
+
+//////// $Pagination /////////
+
+.pagination {
+  font-size: 20px;
+}
+
+.pagination li a {
+  color: #1e5073;
+}
+
+.pagination li.current {
+  background: #1e5073;
+  color: #ffffff;
+  padding: 0.0625em 0.4375em 0.0625em;
+}
+
+
+/////// $Widget /////
+
+#widget h4 {
+  font-size: 16px;
+}
+
+#widget .icon {
+  font-size: 28px;
+}
+
+#widget {
+  font-size: 12px;
+}
+
+#widget .contributed {
+  float: left;
+  margin-top: 5px;
+  margin-right: 20px;
+  padding-bottom: 20px;
+}
+
+#widget .username {
+  font-size: 16px;
+}
+
+///// $Comment box ///////
+
+.submitted {
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.comments .username {
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.comments .avatar {
+  margin-top: 10px;
+}
+
+.comment-content {
+  margin-top: 5px;
+  overflow: hidden;
+  text-overflow:eclipse;
+}
+
+@media only screen and (min-width: 64.063em) { 
+.comment-large {
+  left: -25px;
+}
+}
+////// FEATURES ////////
+
+/////// $Social Media Buttons ////
+
+.share a, .share a:before {
+display: inline-block;
+height: 30px;
+line-height: 30px;
+overflow: hidden;
+vertical-align: middle;
+width: 30px;
+-moz-border-radius: 15px;
+border-radius: 15px;
+}
+
+.share a:before {
+display: inline-block;
+color: #FFF;
+font-family: "FontAwesome";
+text-align: center;
+}
+
+ul.share {
+  margin: 0px 0px 10px 0px;
+}
+
+.share li {
+display: inline-block;
+}
+
+.share-googleplus:before {
+background: #CD3C2A;
+content: "\f0d5";
+}
+
+.share-twitter:before {
+background: #00ACED;
+content: "\f099";
+}
+
+.share-facebook:before {
+background: #3B5998;
+content: "\f09a";
+}
+
+///// $Banner ////////////
+
+#banner {
+margin-top: 23px;
+margin-left: 25px;
+height: 50px;
+}
+
+#banner img {
+  height: 70px;
+  float: left;
+}
+
+#banner .large-pic {
+}
+
+#banner .small-pic {
+}
+
+///// $Karte ////////////
+
+.map-container {
+  position: relative;
+}
+
+#spinner {
+  position: absolute;
+  left: 50%;
+  top: 230px;
+  margin-left: -16px;
+
+  background-image: image-url('spinner.gif');
+  width: 32px;
+  height: 32px;
+  display: none;
+}
+
+a.ini_event {
+  background-color: #e96300;
+  color: #ffffff;
+  padding: 2px;
+}
+
+a.leaflet-draw-draw-marker {
+  width: 50px;
+  height: 50px;
+  background-color: $orange;
+}
+
+.leaflet-draw-actions a {
+  display: none;
+}
+
+a.leaflet-draw-draw-marker:hover {
+  width: 50px;
+  height: 50px;
+  background-color: #eeeeee;
+}
+
+.leaflet-draw-toolbar .leaflet-draw-draw-marker {
+  background-position: 15px 8px;
+}
+
+.leaflet-draw-toolbar a {
+  width: 50;
+  height: 50;
+  background-image: image-url('draw-marker-icon.png');
+  z-index: 1000;
+}
+
+.leaflet-top, .leaflet-bottom {
+  z-index: 0;
+}
+
+////////// $search /////////
+
+.search-box input[type=text]  {
+  font-size: 15px;
+  height: 39px;
+}
+
+.search-box span {
+  height: 39px;
+}
+
+span.postfix, label.postfix {
+background: $orange;
+border-color: $orange;
+border-left: none;
+}
+
+.search-box span .fa-search  {
+  margin-left: -10px;
+  margin-top: -2px;
+}
+
+.search.index input[type=text]  {
+  font-size: 25px;
+    height: 50px;
+  }
+
+////// $chosen ///////
+
+.chosen-container span { 
+  font-size: 16px;
+  color: $blue;
+}
+
+.chosen-container-single .chosen-single span {
+font-weight: bold;
+}
+
+.stadtteile {
+background-color: $blue;
+height: 50px;
+padding-top: 13px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+}
+
+///// $Kalender ////////////
+
+.ui-datepicker-header  {
+ background-color: green;
+ color: #ffffff;
+}
+
+.ui-datepicker-prev, .ui-datepicker-next  {
+  /*
+   * In Internet Explorer, The"border-style: dashed" will never be
+   * rendered unless "(width * 5) >= border-width" is true.
+   * Since "width" is set to "0", the "dashed-border" remains
+   * invisible to the user, which renders the border just like how
+   * "border-color: transparent" renders.
+   */
+  border-style: dashed;
+  border-color: transparent;
+  border-width: 0.53em;
+  display: -moz-inline-box;
+  display: inline-block;
+  /* Use font-size to control the size of the arrow. */
+  font-size: 13px;
+  height: 0;
+  line-height: 0;
+  position: relative;
+  vertical-align: middle;
+  width: 0;
+}
+
+.ui-datepicker-next  {
+  border-left-width: 1em;
+  border-left-style: solid;
+  border-left-color: #ffffff;
+}
+
+.ui-datepicker-prev  {
+  border-right-width: 1em;
+  border-right-style: solid;
+  border-right-color: #ffffff;
+}
+
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next {
+  position: absolute;
+  top: 2px;
+  width: 1.8em;
+  height: 0;
+  margin-top: 10px;
+}
+
+/////// PAGES /////////
+
+///////// Blog ///////
+
+.blog.index .photo, .blog.show .photo {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+///////// Start ///////
+
+#seitenverweis {
+  padding: 5px;
+  text-align:center;
+  font-size: 24px;
+  background-color: #eeeeee;
+}
+
+.engage{
+background-color: #85a0b3;
+padding: 10px;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+}
+
+.engage ul.side-nav li {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+///////// Initiative Index ///////
+
+.initiative.index .username {
+  font-size: 20px;
+  margin: 10px 5px 0px 0;
+}
+
+.initiative.index .date {
+  font-size: 14px;
+}
+
+.initiative.index  h3.heading-post {
+  margin-top: 10px;
+}
+
+.initiative.index .has-tip {
+  font-weight: normal;
+}
+
+.activity .label {
+  font-size: 24px;
+}
+
+.activity .fa-smile-o, .activity .fa-meh-o, .activity .fa-frown-o {
+  font-size: 40px;
+  color: $blue;
+  top: 5px;
+  position: relative;
+  margin: 5px 5px 0 0;
+}
+
+.activity {
+  margin-top: -15px;
+}
+
+///////// Contact Form ///////
+
+.initiative.contact textarea, .page.contact textarea {
+  height: 150px;
+}
+
+///////// Profil ///////
+
+#einstellungen label {
+  font-size: 18px;
+}
+
+#einstellungen input {
+  font-size: 18px;
+}
+
+///// $Toools ////////
+
+.shape {
+min-height: 20px;
+padding: 13px 13px 3px 13px;
+margin-bottom: 20px;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+-webkit-box-shadow: 0px 1px 1px #b4b4b4;
+-moz-box-shadow: 0px 1px 1px #b4b4b4;
+box-shadow: 0px 1px 1px #b4b4b4;
+width: auto;
+}
+
+.username a {
+  color: $blue;
+  font-size: 20px;
+}
+
+.panel.large {
+  font-size: 14px;
+}
+
+.panel.larger {
+  font-size: 18px;
+}
+
+.medium-font {
+  font-size: 15px;
+}
+
+.spacetop {
+  margin-top: 20px;
+}
+
+.spacebottom {
+  margin-bottom: 20px;
+}
+
+.larger-font {
+  font-size: 22px;
+}
+
+.large-font {
+  font-size: 18px;
+}
+
+.medium-font {
+  font-size: 15px;
+}
+
+.small-font {
+  font-size: 13px;
+}
+
+.smaller-font {
+  font-size: 11px;
+}
+
+.sub-nav dt a:hover, .sub-nav dd a:hover {
+-webkit-border-radius: 1000px;
+-moz-border-radius: 1000px;
+border-radius: 1000px;
+font-weight: bold;
+background: #669933;
+padding: 0.1875em 0.5625em;
+cursor: default;
+color: white;
+}
+
+.center {
+ text-align: center;
+}
+
+.backicon {
+ color: #fff;
+  margin-right: 10px;
+  display: inline-block;
+  height: 50px;
+  line-height: 44px;
+  text-align: center;
+  overflow: hidden;
+  vertical-align: middle;
+  width: 50px;
+  -moz-border-radius: 300px;
+  border-radius: 300px;
+  -webkit-border-radius: 300px;
+ }
+
+.backicon .fa {
+  text-align: center;
+  vertical-align: middle;
+}
+

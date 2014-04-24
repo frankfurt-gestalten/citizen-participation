@@ -1,0 +1,20 @@
+- title @page.title
+
+.row.page.show
+  .large-8.medium-8.columns
+    .row
+      .large-9.columns
+        %h1
+          = @page.title
+      .large-3.columns
+        - if can? :edit, @page
+          = link_to "Bearbeiten", edit_page_path(@page), :class => 'small button secondary radius edit'
+        -# if can? :destroy, @page
+          = link_to 'X', @page, :confirm => "Sind Sie sich sicher?", :method => :delete, :class => 'small radius button delete'
+
+    %p
+      = @page.content.html_safe
+  .large-4.medium-4.columns
+    = render 'widgets/recent_updated_initiatives'
+    = render 'widgets/newsletter_signup'
+    = render 'widgets/recent_comments'

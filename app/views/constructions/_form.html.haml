@@ -1,0 +1,105 @@
+= form_for(@construction, :html => {:class=> 'form'}) do |f|
+  - if @construction.errors.any?
+    #error_explanation
+      %ul
+        - @construction.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    .row
+      .large-8.columns
+        %h3
+          = f.label :title, :class => ''
+        = f.text_field :title, :class => ''
+        %h3
+          = f.label "Inhalt", :class => ''
+        = f.text_area :description_long, :class => '', :id => 'redactor_content'
+
+    .row
+      .large-8.columns
+        #map{:style => "width: auto; height: 350px; border: 1px solid #ccc; margin: 20px 0 20px"}
+        = f.hidden_field "lat"
+        = f.hidden_field "lng"
+        %p
+          %a{:href => 'javascript:void(0)', :class => 'remove-location'} Marker löschen
+    .row
+      .large-8.columns
+        .submit
+          = f.submit "Speichern", :class => 'button'
+          %span.cancel
+            oder
+          = link_to "Abbrechen", :back, :class => 'cancel'
+
+= content_for :footer do
+  :javascript
+    $(document).ready(
+      function() {
+        $('#redactor_content').redactor({ lang: 'de', buttons: ['bold','italic','underline','|','unorderedlist','orderedlist','outdent','indent','|','link']});
+
+      L.drawLocal.draw.handlers.marker.tooltip.start = 'Marker auf der Karte mit einem Klick positionieren';
+      L.drawLocal.draw.toolbar.buttons.marker = 'Setze ein Punkt auf die Karte.';
+      L.Icon.Default.imagePath = '/assets';
+      var map;
+      if( $('#antraege_long').val().length > 0 ) {
+      map = new L.Map('map').setView(new L.LatLng($('#antraege_lat').val(), $('#antraege_long').val()), 13);
+      }
+      else {
+      map = new L.Map('map').setView(new L.LatLng(50.775346 , 6.083887), 13);
+      }
+      var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/okf.map-najwtvl1/{z}/{x}/{y}.png',
+          mapbox = new L.TileLayer(mapboxUrl, {"attribution": "\u00a9 <a href=\"http://www.openstreetmap.org/\" target=\"_blank\">OpenStreetMap</a> contributors"});
+      map.addLayer(mapbox,true);
+      map.scrollWheelZoom.disable();
+
+      var drawControl = new L.Control.Draw({
+          draw: {
+              polygon: false,
+              circle: false,
+              polyline: false,
+              rectangle: false
+          }
+      });
+
+      map.addControl(drawControl);
+
+      var drawnItems = new L.FeatureGroup();
+      map.addLayer(drawnItems);
+
+      if( $('#antraege_long').val().length > 0 ) {
+        var marker = L.marker([$("#antraege_lat").val(), $("#antraege_long").val()]);
+        drawnItems.addLayer(marker);
+      }
+
+      map.on('draw:created', function (e) {
+        drawnItems.clearLayers();
+        var marker = e.layer;
+        marker.bindPopup('A popup!');
+        drawnItems.addLayer(marker);
+        $("#antraege_long").val(marker._latlng.lng)
+        $("#antraege_lat").val(marker._latlng.lat)
+      });
+      map.addLayer(drawnItems);
+
+        $('.remove-location').click(function () {
+          drawnItems.clearLayers();
+          $("#antraege_long").val('');
+          $("#antraege_lat").val('');
+        });
+
+        $('#antraege_street').change(function() {
+          var coords = $(this).val().split(',');
+          $("#antraege_long").val(coords[1]);
+          $("#antraege_lat").val(coords[0]);
+
+          if( $('#antraege_long').val().length > 0 ) {
+            drawnItems.clearLayers();
+            var marker = L.marker(coords);
+            drawnItems.addLayer(marker);
+          }
+        });
+
+        var idToLocation = $('*[data-quarters]').data('quarters');
+        $('#antraege_quarter').change(function () {
+          var location = idToLocation[$(this).val()];
+          map.setView(new L.LatLng(location[1], location[0]), 13);
+        });
+      });

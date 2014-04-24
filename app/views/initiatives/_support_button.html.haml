@@ -1,0 +1,8 @@
+#support_button
+  - if current_user
+    - if @supporting
+      = button_to "Unterstützung beenden", unsupport_initiative_path(@initiative), :method => :post, :remote =>   true, :class => 'button radius secondary', :style => "width: 100%"
+    - else
+      = button_to "Unterstützer werden", support_initiative_path(@initiative), :method => :post, :remote => true, :class => 'button radius secondary', :style => "width: 100%"
+  - else
+    = link_to "Unterstützer werden", '#', "data-reveal-id" => "login-window", class: "button radius secondary"

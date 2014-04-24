@@ -1,0 +1,23 @@
+= title "Baustellen"
+
+
+.row.construction.index
+  .large-6.columns
+    %h1
+     Baustellen
+
+    - @constructions.each do |construction|
+      .panel
+        .row
+          .large-4.columns
+            = link_to construction.name, construction_path(construction)
+          .large-1.columns
+          .large-3.columns
+            - if can? :edit, construction
+              = link_to 'Bearbeiten', edit_construction_path(construction), :class => "button tiny"
+            - if can? :destroy, construction
+              = link_to 'Löschen', construction, :method => :delete, :data => { :confirm => 'Sind Sie sich sicher?' }, :class => "button tiny"
+
+
+= paginate @constructions
+

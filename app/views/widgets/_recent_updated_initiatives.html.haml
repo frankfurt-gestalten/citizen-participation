@@ -1,0 +1,20 @@
+#widget.shape.bright-grey
+  %h3
+    %span.backicon.initiative-back
+      .fa.fa-lightbulb-o
+    Aktive Initiativen
+  %ul.side-nav
+    - Initiative.active.each do |initiative|
+      %li
+        - if current_user
+          .contributed
+            = link_to image_tag(avatar_url(initiative.user, 25), alt: initiative.user.username, width: "25", height: "25", :class => "avatar"), profile_path(initiative.user)
+          = link_to initiative.user.username, profile_path(initiative.user)
+        - else
+          .contributed
+            = image_tag(avatar_url(initiative.user, 25), alt: initiative.user.username, width: "25", height: "25", :class => "avatar")
+          = initiative.user.username
+        = link_to(truncate(initiative.title, :length => 80, :omission => '...'), initiative_path(initiative))
+  %h4
+    = link_to "mehr Initiativen", initiatives_path
+

@@ -1,0 +1,9 @@
+%p
+  Herzlich Willkommen bei Frankfurt Gestalten!
+
+%p Schön, dass Du bei Frankfurt Gestalten mitmachst.
+
+%p Du kannst Deine E-Mail mit dem Klick des unten stehenden Links bestätigen:
+%p= link_to 'E-Mail bestätigen', confirmation_url(@resource, :confirmation_token => @token)
+
+= render "/initiativen_mailer/signatur"

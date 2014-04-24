@@ -1,0 +1,155 @@
+= title "Meine Profildaten"
+
+.row#einstellungen
+  .large-5.medium-6.columns
+    .panel
+      %h2
+        Meine Profildaten
+
+      = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+        = devise_error_messages!
+        = hidden_field_tag 'user[public_fields][]', 'username'
+        .row
+          .large-6.columns
+            %h3
+              %label
+                Benutzername (mindestens 6 Zeichen)
+          .large-6.columns
+            .pull-right
+              .label.round.secondary
+                Öffentlich
+        = f.text_field :username
+        .row
+          .large-6.columns
+            %h3
+              = f.label "Foto"
+            = image_tag(avatar_url(f.object, 150), width: 150, height: 150, :class => 'user-photo')
+            %br
+            = f.check_box :remove_avatar
+            Foto löschen
+            %p
+              %br
+              = f.file_field :avatar, :class => 'input-file'
+
+        .row
+          .large-6.columns
+            %h3
+              %label
+                Passwort (mindestens 8 Zeichen)
+          .large-6.columns
+        = f.password_field :password, :autocomplete => "off"
+        %label
+          Passwort bestätigen
+        = f.password_field :password_confirmation
+        .row
+          .large-6.columns
+            %h3
+              %label
+                E-Mail
+          .large-6.columns
+            .label.round.pull-right
+              Geschützt
+        = f.email_field :email
+        .row
+          .large-6.columns
+            %h3
+              = f.label "Verein"
+          .large-6.columns
+            .pull-right
+              = check_box_tag 'user[public_fields][]', 'verein', @user.public_fields.include?('verein')
+              .label.round.secondary
+                Öffentlich
+        = f.text_field :verein
+        .row
+          .large-6.columns
+            %h3
+              = f.label "Partei"
+          .large-6.columns
+            .pull-right
+              = check_box_tag 'user[public_fields][]', 'partei', @user.public_fields.include?('partei')
+              .label.round.secondary
+                Öffentlich
+        = f.text_field :partei
+        .row
+          .large-6.columns
+            %h3
+              %label
+                Politisches Amt
+          .large-6.columns
+            .pull-right
+              = check_box_tag 'user[public_fields][]', 'polit_amt', @user.public_fields.include?('polit_amt')
+              .label.round.secondary
+                Öffentlich
+        = f.text_field :polit_amt
+        .row
+          .large-6.columns
+            %h3
+              = f.label "Verwaltung"
+          .large-6.columns
+            .pull-right
+              = check_box_tag 'user[public_fields][]', 'verwaltung', @user.public_fields.include?('verwaltung')
+              .label.round.secondary
+                Öffentlich
+        = f.text_field :verwaltung
+        .row
+          .large-6.columns
+            = f.submit "Speichern", :class => "button secondary radius"
+  .large-6.medium-6.large-offset-1.columns
+    .panel
+      %h2
+        Meine E-Mail Abos
+      %p
+        Du bekommst immer eine Email, wenn es Veränderungen auf Frankfurt Gestalten gibt, die
+        Deine Suchworte oder ausgewählten Initiativen betreffen.
+
+      %h3
+        Themen
+      - if @subscriptions.present?
+        - @subscriptions.each do |subscription|
+          .row{'data-search-subscription-id' => subscription.id}
+            .large-6.columns
+              .panel{:style => "background-color: #ffffff"}
+                %p
+                  Suchabfrage:
+                  = subscription.query
+            .large-6.columns
+              = link_to 'E-Mail Abo beenden', subscription, :method => :delete, :class => "button radius", :remote => true
+
+          %hr
+
+      %h3
+        Initiativen
+      - if @subscriptions_iniatives
+        - @subscriptions_iniatives.each do |subscription_iniatives|
+          .row
+            .large-6.columns
+              .panel{:style => "background-color: #ffffff"}
+                %p
+                  = link_to truncate(subscription_iniatives.subscribable.title, :length => 50), initiative_path(subscription_iniatives.subscribable)
+            .large-6.columns
+
+              - @initiative = subscription_iniatives.subscribable
+              - @subscribed = true
+              = render 'initiatives/subscribe_button'
+            %hr
+      - if @quarter_subscriptions.present?
+        %h3 Stadtteil
+        - @quarter_subscriptions.each do |quarter|
+          .row
+            .large-6.columns
+              .panel{:style => "background-color: #ffffff"}
+                %h4
+                  = quarter.name
+            .large-6.columns
+
+              - @quarter_id = quarter.id
+              - @subscribed = true
+              = render 'quarters/subscribe_button'
+            %hr
+
+= content_for :inline_js do
+  :javascript
+    $(document).on('ajax:before', 'div[data-subscribe-id] form', function () {
+      $(this).closest('div').attr('data-subscribe-id', null);
+      $(this).closest('.row').slideUp();
+    });

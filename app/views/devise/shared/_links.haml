@@ -1,0 +1,15 @@
+-# if controller_name != 'sessions'
+  = link_to "Anmelden", new_session_path('user')
+  %br/
+-# if controller_name != 'registrations'
+  = link_to "Registrieren", new_registration_path('user')
+  %br/
+- if controller_name != 'passwords'
+  = link_to "Passwort vergessen", new_password_path('user')
+  %br/
+  = link_to "Kam die Verifizierungs-Email nicht an?", new_confirmation_path('user')
+%br/
+- if false
+  - User.omniauth_providers.each do |provider|
+    = link_to "Sign in with #{provider.to_s.titleize}", omniauth_authorize_path('user', provider)
+    %br/

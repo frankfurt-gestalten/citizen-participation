@@ -1,0 +1,9 @@
+= title "Admin Notizen"
+
+= form_tag note_profile_path(@user), method: :put do
+  .row
+    .large-8.columns.shape.grey
+      %h3
+        = label_tag "Notizen für #{@user.username}"
+      = text_area_tag :notes, @user.notes, :style => 'height: 200px;'
+      %button{type: 'submit'} Speichern

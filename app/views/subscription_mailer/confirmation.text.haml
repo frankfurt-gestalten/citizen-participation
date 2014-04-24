@@ -1,0 +1,7 @@
+
+Themen-Abo:
+= @subscription.query
+Bitte klick hier, wenn Du das Themen-Abo aktivieren möchtest:
+= confirm_search_subscription_url(@subscription.confirmation_token)
+
+= render "/initiativen_mailer/signatur"

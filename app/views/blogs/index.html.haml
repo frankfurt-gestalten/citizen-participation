@@ -1,0 +1,30 @@
+= title "Blogs"
+
+.row.blog.index
+  .large-11.columns
+    %h1 Blog
+
+    - @blogs.each do |blog|
+      .row{style: "margin-top: 40px;"}
+        .large-4.medium-4.columns
+          - if foto = blog.fotos.first
+            = image_tag(foto.file_url(:blog_small).to_s, :class => 'photo')
+
+        .large-8.medium-8.columns
+          %h2
+            = link_to blog.title, blog_path(blog)
+          %p
+            .username
+              = link_to image_tag(avatar_url(blog.user, 25), alt: blog.user.username, width: "25", height: "25", :class => "avatar"), profile_path(blog.user)
+              - if current_user
+                = link_to blog.user.username, profile_path(blog.user)
+              - else
+                = blog.user.username
+              = l blog.created_at, :format => :short
+          %p
+            = truncate_html(blog.content, :length => 400, :omission => '...')
+          %p
+            = link_to "weiter lesen", blog_path(blog)
+
+    = paginate @blogs
+

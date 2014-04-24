@@ -1,0 +1,14 @@
+.row
+  .large-10.columns
+    = form_for @subscription do |f|
+      %h4
+        Abo Suchabfrage
+      = f.text_field :query
+
+      - unless user_signed_in?
+        = f.label :email
+        = f.email_field :email
+        %p
+          Du bekommst noch eine E-Mail zur Bestätigung des Abos.
+
+      = f.submit 'Per E-Mail Abonnieren',:class => "button radius secondary"

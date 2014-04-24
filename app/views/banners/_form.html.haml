@@ -1,0 +1,21 @@
+= form_for(@banner, :html => {:class=> 'form'}) do  |f|
+  -if @banner.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@banner.errors.count, "Fehler")} haben das speichern verhindert:"
+      %ul
+        - @banner.errors.full_messages.each do |msg|
+          %li
+            = msg
+  .shape
+    %h3
+      Titel
+    .spacetop.spacebottom
+      = f.text_field :title, :class => '', :placeholder => "Titel"
+      %h3
+        Bild
+      = f.file_field :file, :class => 'button secondary'
+  .submit
+    = f.submit "Speichern", :class => 'button radius'
+    %span.cancel
+      oder
+    = link_to "Abbrechen", :back, :class => 'cancel'

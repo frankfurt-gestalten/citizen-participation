@@ -1,0 +1,151 @@
+= nested_form_for(@initiative, :html => { :id => "", :class => '', :multipart => true }) do |f|
+  - if @initiative.errors.any?
+    #error_explanation
+      %h2= "Die Initiative konnte nicht gespeichert werden:"
+      - @initiative.errors.full_messages.each do |msg|
+        .alert-box.round
+          = msg
+
+  %fieldset
+    .row
+      .large-8.columns
+        -#= f.text_field :updated_at, :id => 'date-event', :value => @initiative.updated_at.strftime('%d.%m.%Y')
+
+        %h3
+          = f.label "Titel"
+        = f.text_field :title
+        - if current_user.admin? or current_user.moderator? or current_user.superadmin?
+          .shape.grey
+            %label{:for => "checkbox"}
+              = f.check_box :visible, {:default => true, :checked => ("checked" if @initiative.visible == true)}
+              %span{:class => "custom checkbox"}
+              %b Initiative ist für normale Nutzer sichtbar
+        %h3
+          = f.label "Beschreibung"
+        = f.text_area :content, :class => "smaller-textarea redactor_content"
+        %h3
+          %label
+            Foto
+        = f.fields_for :fotos do |image_form|
+          .image-upload
+            = image_form.label "Titel", :class => ''
+            = image_form.text_field :title, :class => ''
+            - if image_form.object.new_record?
+              = image_form.label "Bild", :class => ''
+              = image_form.label :file, :class => "button radius" do
+                = image_form.file_field :file, :class => ''
+              %span.file-name
+                = image_form.link_to_remove "Bild löschen"
+            - if not image_form.object.new_record?
+              = image_tag(image_form.object.file_url(:thumb).to_s, width: 125, height: 125, :class => 'form-photo')
+              %label{:for => "checkbox"}
+              = image_form.check_box :_destroy, :id => "checkbox"
+              %label
+                %b Bild Löschen
+        = f.link_to_add "Bild hinzufügen", :fotos, :class => "button radius secondary"
+        %h3
+          = f.label "Was willst du erreichen?"
+        = f.text_area :erreicht, :class => "smaller-textarea redactor_content"
+        %h3
+          = f.label "Was hast du bisher getan?"
+        = f.text_area :getan, :class => "smaller-textarea redactor_content"
+      -#.large-4.columns
+        %h3
+          = f.label "Kategorien   "
+        = f.select :category_ids, Category.all.map { |c| [c.name, c.id] }, {include_blank: 'Keine ausgewählt'}
+    .row
+      .large-8.columns
+        #map{:style => "width: auto; height: 350px; border: 1px solid #ccc; margin: 20px 0 20px"}
+        = f.hidden_field "lat"
+        = f.hidden_field "long"
+      .large-4.columns
+        .geo-select{:style => "margin: 20px 0 20px 0;"}
+          = content_tag 'div', '', data: { quarters: @quarters_id_to_location }, style: 'display:none'
+          = select_tag 'initiative_quarter', options_from_collection_for_select(@quarters, 'id', 'name'), include_blank: true, class: 'model_quarter chosen', data: { placeholder: 'Stadtteil'}
+          = select_tag 'initiative_street', '', class: 'model_street chosen', include_blank: true, data: { placeholder: 'Straße'}
+
+        %h4
+          Bitte möglichst immer einen Ort auswählen. Einen Marker entweder manuell links setzen (orangener Knopf) oder oben per Liste erst den Stadtteil und dann die Straße auswählen.
+
+
+        %a{:href => 'javascript:void(0)', :class => 'remove-location button radius tiny'} Marker löschen
+
+  .submit
+    = f.submit "Speichern", :class => 'button radius'
+    %span.cancel
+      oder
+    = link_to "Abbrechen", :back, :class => 'cancel'
+= content_for :footer do
+  :javascript
+    $(document).ready(function() {
+        $('.redactor_content').redactor({ lang: 'de', buttons: ['bold','italic','underline','|','unorderedlist','orderedlist','outdent','indent','|','link']});
+
+    L.drawLocal.draw.handlers.marker.tooltip.start = 'Marker auf der Karte mit einem Klick positionieren';
+    L.drawLocal.draw.toolbar.buttons.marker = 'Setze ein Punkt auf die Karte.';
+    L.Icon.Default.imagePath = '/assets';
+
+    var map;
+    if( $('#initiative_long').val().length > 0 ) {
+    map = new L.Map('map').setView(new L.LatLng($('#initiative_lat').val(), $('#initiative_long').val()), 13);
+    }
+    else {
+    map = new L.Map('map').setView(new L.LatLng(50.119182 , 8.677139), 13);
+    }
+    var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/okf.map-najwtvl1/{z}/{x}/{y}.png',
+        mapbox = new L.TileLayer(mapboxUrl, {"attribution": "\u00a9 <a href=\"http://www.openstreetmap.org/\" target=\"_blank\">OpenStreetMap</a> contributors"});
+    map.addLayer(mapbox,true);
+    map.scrollWheelZoom.disable();
+
+    var drawControl = new L.Control.Draw({
+        draw: {
+            polygon: false,
+            circle: false,
+            polyline: false,
+            rectangle: false
+        }
+    });
+
+    map.addControl(drawControl);
+
+    var drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
+
+    if( $('#initiative_long').val().length > 0 ) {
+      var marker = L.marker([$("#initiative_lat").val(), $("#initiative_long").val()]);
+      drawnItems.addLayer(marker);
+    }
+
+    map.on('draw:created', function (e) {
+      drawnItems.clearLayers();
+      var marker = e.layer;
+      marker.bindPopup('A popup!');
+      drawnItems.addLayer(marker);
+      $("#initiative_long").val(marker._latlng.lng)
+      $("#initiative_lat").val(marker._latlng.lat)
+    });
+    map.addLayer(drawnItems);
+
+      $('.remove-location').click(function () {
+        drawnItems.clearLayers();
+        $("#initiative_long").val('');
+        $("#initiative_lat").val('');
+      });
+
+      $('#initiative_street').change(function() {
+        var coords = $(this).val().split(',');
+        $("#initiative_long").val(coords[1]);
+        $("#initiative_lat").val(coords[0]);
+
+        if( $('#initiative_long').val().length > 0 ) {
+          drawnItems.clearLayers();
+          var marker = L.marker(coords);
+          drawnItems.addLayer(marker);
+        }
+      });
+
+      var idToLocation = $('*[data-quarters]').data('quarters');
+      $('#initiative_quarter').change(function () {
+        var location = idToLocation[$(this).val()];
+        map.setView(new L.LatLng(location[1], location[0]), 13);
+      });
+    });

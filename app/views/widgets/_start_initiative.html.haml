@@ -1,0 +1,5 @@
+.centered
+  - if current_user
+    = link_to "Initiative starten", new_initiative_path, :class => "button secondary radius large"
+  - else
+    = link_to "Initiative starten", '#', "data-reveal-id" => "login-window", class: "button secondary radius large"

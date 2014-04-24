@@ -1,0 +1,42 @@
+= form_for(@neuigkeiten, :html => {:class=> 'form custom'}) do  |f|
+  - if @neuigkeiten.errors.any?
+    #error_explanation
+      %ul
+        - @neuigkeiten.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    %h3
+      = f.label :title, :class => ''
+    = f.text_field :title, :class => ''
+    %p
+      %label
+        Ort
+      = f.text_field :street
+      = f.label :datum, :class => ''
+      - if @neuigkeiten.datum
+        - datum = @neuigkeiten.datum.strftime('%d.%m.%Y')
+      - else
+        - datum = ''
+      = f.text_field :datum, :id => 'date-event', :value => datum
+    - if current_user.initiatives.present?
+      = f.select :initiative_id, current_user.initiatives.map { |c| [c.title, c.id] }, {include_blank: 'Initiative auswählen', :selected => params[:initiative_id]}
+
+    %h3
+      = f.label :description, :class => ''
+    = f.text_area :description, :class => '', :id => 'redactor_content'
+
+  .submit
+    = f.submit "Speichern", :class => 'button radius'
+    %span.cancel
+      oder
+    = link_to "Abbrechen", :back, :class => 'cancel'
+
+
+= content_for :footer do
+  :javascript
+    $(document).ready(
+      function()
+      {
+        $('#redactor_content').redactor({ lang: 'de', buttons: ['bold','italic','underline','|','unorderedlist', 'orderedlist','outdent','indent','|','link']});
+      }
+    );

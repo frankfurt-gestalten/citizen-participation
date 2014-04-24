@@ -1,0 +1,10 @@
+%ul.share
+  %li
+    - path = polymorphic_url(url)
+    - facebook_url = u path
+    - title = u url.title
+    %a.share-facebook{href: "http://www.facebook.com/share.php?title=" + title + "&u=" + facebook_url} Facebook
+  %li
+    %a.share-twitter{href: "https://twitter.com/share?lang=de&text=" + title + "&url=" + path} Twitter
+  %li
+    %a.share-googleplus{href: "https://plus.google.com/share?hl=de&url=" + path} Google+

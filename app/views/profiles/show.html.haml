@@ -1,0 +1,65 @@
+- title @user.username
+
+.row.profile.show
+  .large-6.medium-6.columns
+    %h1
+      Profil
+      = @user.username
+  .large-6.medium-6.columns
+    .right
+      - if current_user.moderator? or current_user.admin? or current_user.superadmin?
+        = link_to "Hinweise Nutzer", note_profile_path(@user), :class => "button radius"
+      - if current_user == @user
+        = link_to "Profil ändern / E-Mail Abos", edit_user_registration_path, :class => "button radius"
+
+.row.profile.show
+  .large-4.medium-4.columns
+    .shape.bright-grey
+      = image_tag(avatar_url(@user, 150), alt: @user.username, :class => "avatar")
+      %ul.side-nav
+        - @user.fields_visible_to(current_user).each do |name|
+          %li
+            - if @user.public_send(name)
+              #{t(name)}:
+              = @user.public_send(name)
+      %p
+        Mitglied seit dem
+        = l @user.created_at, :format => :short
+
+  .large-8.medium-8.columns
+    .shape.bright-grey
+      %h2
+        Eigene Initiativen
+      - if @user.initiatives.exists?
+        - @user.initiatives.each do |initiative|
+          %h4
+            = link_to initiative.title, initiative_path(initiative)
+            - if initiative.visible != true
+              .label.round.alert
+                Nicht veröffentlicht
+            -#%i.icon-comments
+              = initiative.comments.count
+            -#%i.icon-thumbs-up
+              = initiative.supporters.count
+      - else
+        %p
+          Noch keine Initiativen
+      %h2
+        Unterstützte Initiativen
+      - if @user.sympathies.exists?
+        - @user.sympathies.each do |supported|
+          %h4
+            = link_to supported.initiative.title, initiative_path(supported.initiative)
+      - else
+        %p
+          Noch keine Unterstützung
+      %h2
+        Kommentare
+      - if @user.comments.exists?
+        - @user.comments.each do |comment|
+          %h4
+            = link_to(truncate(comment.content, :length => 80), url_for(comment.commentable))
+      - else
+        %p
+          Noch keine Kommentare
+

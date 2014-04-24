@@ -1,0 +1,24 @@
+#widget.shape.bright-grey
+  %h3
+    %span.backicon.blue-back
+      .fa.fa-comment
+    Neue Kommentare
+  %ul.side-nav
+    - get_recent_comments.each do |comment|
+      - next if (comment.commentable_type == 'Initiative') && (!comment.commentable.visible)
+      %li
+        - if comment.user.present?
+          .contributed
+            = link_to image_tag(avatar_url(comment.user, 25), alt: comment.user.username, width: "25", height: "25", :class => "avatar"), profile_path(comment.user)
+          .username-small
+            - if current_user
+              = link_to comment.user.username, profile_path(comment.user)
+            - else
+              = comment.user.username
+        - else
+          .contributed
+            = image_tag('avatar-25.png', alt: "Avatar", width: "25", height: "25", :class => "avatar")
+          .username
+            = comment.user_name if comment.user_name
+        - if comment.content
+          = link_to(truncate(comment.content, :length => 70, :omission => '...'), comment.commentable)

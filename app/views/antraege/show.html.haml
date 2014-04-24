@@ -1,0 +1,96 @@
+= title @antraege.title
+
+.row
+  .large-7.medium-7.columns
+    %h1
+      %span.backicon.antraege-back
+        .fa.fa-file-text
+      = @antraege.title
+    .row
+      .large-5.columns.spacetop
+        = l @antraege.datum, :format => :short
+        .smaller-font
+          .fa.fa-clock-o
+          (#{l @antraege.aktualisiert, :format => :short})
+      .large-3.columns.spacetop
+        - if @antraege.partei.present?
+          Verantwortlich:
+          = @antraege.partei
+      .large-4.columns.spacetop
+        - if @antraege.link
+          = link_to 'Link zum Original Dokument', @antraege.link, "data-tooltip" => "", :rel => "nofollow", :title => "Link zum Original Dokument (Parlamentsinformationssystem - PARLIS - der Stadtverordnetenversammlung Frankfurt am Main)", :target => "_blank", :class => "has-tip tip-top button tiny radius"
+    %p
+      = sanitize(auto_link(@antraege.content.html_safe, :all, :target => "_blank"), tags: %w(p b i ul ol li u a), attributes: %w())
+
+    %p
+      = sanitize(auto_link(@antraege.begruendung.html_safe, :all, :target => "_blank"), tags: %w(p b i ul ol li u a), attributes: %w())
+    %p
+      %b
+        #{pluralize(@antraege.comments.count(:id), "Kommentar")}
+
+    - if @comments.present?
+      = nested_messages @comments if @comments
+    %a{:name => "comment"}
+    %h4
+      Kommentar
+
+    = render :partial => "comments/form", :locals => {:commentable => @antraege}
+
+  .large-5.medium-5.columns
+    - if can? :edit, @antraege
+      = link_to "Bearbeiten", edit_antraege_path(@antraege), :class => 'small radius button secondary edit'
+    - if can? :destroy, @antraege
+      = link_to 'X', @antraege, :confirm => "Sind Sie sich sicher?", :method => :delete, :class => 'small radius button delete'
+    %h2
+      Antrag Ortsbeirat #{@antraege.ob_nummer}
+    - if @antraege.lat?
+      #map{:style => "width: auto; height: 350px; border: 1px solid #ccc;"}
+    .shape.bright-grey
+      %h3
+        Was sind das hier für Dokumente?
+      %p
+        Dies sind Vorlagen, die die Arbeit der Frankfurter Ortsbeiräte seit 2006 dokumentieren. Vorlagen werden von Mitgliedern (Parteien) der Ortsbeiräte eingebracht, beraten und zur Abstimmung gebracht.
+    .shape.bright-grey
+      %span{:style => "float: left; margin: 7px 10px 0 0;"} Teile den Antrag
+      = render 'initiatives/social_media_buttons', url: @antraege
+    .shape.bright-grey
+      %h3
+        Ich will mich einschalten!
+      = link_to "Ort / Tagesordnung der nächsten Sitzung", "http://www.stvv.frankfurt.de/parlis/TO-O-" + @antraege.ob_nummer.to_s + ".htm", :class => 'small radius button secondary', target: "_blank"
+      = link_to "Ansprechpartner im Ortsbeirat", "http://www.stvv.frankfurt.de/stvvorg/P_OBR_" + @antraege.ob_nummer.to_s + ".htm", :class => 'small radius button secondary', target: "_blank", :rel => "nofollow"
+      %br
+      = link_to "Hier kommentieren", antraege_path(@antraege, anchor: "comment"), :class => 'small radius button secondary'
+    = render 'widgets/newsletter_signup'
+    = render 'widgets/abgeordnetenwatch'
+
+    .shape.bright-grey
+      %h3
+        Ortsbeiräte
+      %p
+        Frankfurt hat 16 Ortsbeiräte mit 284 ehrenamtlichen Mitgliedern aus verschiedenen Parteien. Diese Ortsbeiräte halten regelmäßige Sitzungen ab, bei denen Du teilnehmen kannst. Auf der Webseite der Stadt Frankfurt ist die
+        %a{href: "http://www.frankfurt.de/sixcms/detail.php?id=3470", :target => "_blank"} aktuelle Liste 
+        der Ortsbeiräte mit den nächsten Sitzungsterminen.
+      %p
+        Die jeweils für Deine Straße verantwortlichen Ortsbeiratsmitglieder können auf
+        %a{href: "http://www.frankfurt.de/sixcms/list.php?page=7405_strassensuche_polit_ehrenbeamte_2&sv[STATUS]=freigeschaltet&sv[VERWENDUNGSZWECK]=*SIS&sv[fra_approxim][view]=V_FRA_REGIONALDATEI_5001&sv[fra_approxim][strasse]=&sv[fra_approxim][hausnr]=", :target => "_blank"} dieser Seite 
+        gesucht werden.
+
+        Weitere Informationen zu den Ortsbeiräten gibt es auf
+        %a{href: "http://www.frankfurt.de/sixcms/detail.php?id=3470", :target => "_blank"} der Webseite der Stadt Frankfurt.
+
+
+- if @antraege
+  = content_for :footer do
+    :javascript
+      var map = new L.Map('map').setView(new L.LatLng(#{@antraege.lat}, #{@antraege.long}), 17);
+      var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/okf.map-najwtvl1/{z}/{x}/{y}.png',
+          mapbox = new L.TileLayer(mapboxUrl, {"attribution": "\u00a9 <a href=\"http://www.openstreetmap.org/\" target=\"_blank\">OpenStreetMap</a> contributors"});
+      map.addLayer(mapbox,true);
+      map.scrollWheelZoom.disable();
+      L.Icon.Default.imagePath = '/assets';
+
+    %script{ :type => 'text/javascript' }
+      - if @antraege.lat.present?
+        var icon = L.AwesomeMarkers.icon({prefix: 'fa', icon: 'file-text', markerColor: 'blue', iconColor: '#ffffff'});
+        marker = L.marker([#{@antraege.lat}, #{@antraege.long}], { icon: icon }).addTo(map);
+

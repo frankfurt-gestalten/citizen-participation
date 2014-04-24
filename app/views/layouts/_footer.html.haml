@@ -1,0 +1,63 @@
+.row#footer
+  .large-5.medium-12.small-12.columns
+    Inhalte sind
+    %a{:href => "http://creativecommons.org/licenses/by-sa/3.0/de/"}
+      %span.fa.fa-external-link
+      CC-BY-SA
+    lizenziert, sofern nicht anders angegeben.
+    -#%a{:href => "http://okfn.de/", :target => "_blank"}
+      Ein Projekt der Open Knowledge Foundation e.V.
+  .large-7.small-12.columns
+    .right
+      = link_to "Presse", static_path('presse')
+      \|
+      = link_to "Spielregeln", static_path('spielregeln')
+      \|
+      = link_to "Kontakt", static_path('kontakt')
+      \|
+      = link_to "Impressum", static_path('impressum')
+      \|
+      %a{:href => "https://github.com/frankfurt-gestalten", :target => "_blank"}
+        %span.fa.fa-external-link
+        Open Source Code
+#login-window.reveal-modal.medium{"data-reveal" => ""}
+  .row.user
+    .large-8.medium-12.columns
+      %h2
+        Anmelden
+      = form_for(User.new, :url => session_path('user')) do |f|
+        = hidden_field_tag 'modal', '1'
+        .row
+          .large-12.columns
+            E-Mail
+            = f.email_field :email
+        .row
+          .large-12.columns
+            Passwort
+            = f.password_field :password
+        .row.spacetop.spacebottom
+          .large-12.columns
+            %label{:for => "remember_me"}
+              = f.check_box :remember_me
+              %span.custom.radio
+                Für 2 Wochen speichern
+              %br
+              %br
+        %a.close-reveal-modal
+          X
+
+        .row
+          .small-10.columns
+            = f.submit "Anmelden", :class => "button radius"
+            = render "devise/shared/links"
+    .large-4.columns
+      = link_to "Registrieren", new_registration_path('user'), class: "button radius secondary small"
+
+      .shape
+        %h4
+          Wichtiger Hinweis für Mitglieder!
+        %p
+          Mit der Umstellung auf die neue Plattform haben wir nur die Nutzerdaten ohne Passwort übertragen. Deshalb müsst ihr noch mal ein
+          %b
+            = link_to "neues Passwort beantragen.", new_password_path('user')
+          = link_to "Bitte melden wenn es nicht klappt.", static_path('kontakt')

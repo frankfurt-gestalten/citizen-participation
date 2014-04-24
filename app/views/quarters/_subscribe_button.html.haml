@@ -1,0 +1,8 @@
+%div{'data-subscribe-id' => @quarter_id}
+  - if @subscribed
+    = button_to "E-Mail Abo beenden", unsubscribe_quarter_path(@quarter_id), :method => :post, :remote => true, :class => 'button secondary', :style => "width: 100%"
+  - else
+    - unless current_user
+      = link_to "Infos per E-Mail aus dem Stadtteil", '#', "data-reveal-id" => "login-window", class: "button radius secondary"
+    - else
+      = button_to "Infos per E-Mail aus dem Stadtteil", subscribe_quarter_path(@quarter_id), :method => :post, :remote => true, :class => 'button radius secondary', :style => "width: 100%"

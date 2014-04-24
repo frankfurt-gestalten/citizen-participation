@@ -1,0 +1,137 @@
+= form_for(@antraege, :html => {:class=> 'form'}) do |f|
+  - if @antraege.errors.any?
+    #error_explanation
+      %ul
+        - @antraege.errors.full_messages.each do |msg|
+          %li= msg
+  %fieldset
+    .row
+      .large-8.columns
+        %h3
+          = f.label :title, :class => ''
+        = f.text_field :title, :class => ''
+        .shape.grey
+          %label{:for => "checkbox"}
+            = f.check_box :check, {:default => false}
+            %span{:class => "custom checkbox"}
+            %b Antrag nach Ort geprüft
+        %p
+          %label
+            Partei
+          = f.text_field :partei
+          %label
+            Datum
+          - if @antraege.datum
+            - datum = @antraege.datum.strftime('%d.%m.%Y')
+          - else
+            - datum = ''
+          = f.text_field :datum, :id => 'date-event', :value => datum
+          = f.label "Link", :class => ''
+          = f.text_field :link
+          = f.label "Nummer", :class => ''
+          = f.text_field :ob_nummer
+          = f.label "Betreff", :class => ''
+          = f.text_area :content, :class => 'redactor_content'
+
+        %h3
+          = f.label "Begruendung", :class => ''
+        = f.text_area :begruendung, :class => 'redactor_content'
+
+        %h3
+          = f.label "Ergebnis", :class => ''
+        = f.text_area :ergebnisse, :class => 'redactor_content'
+
+    .row
+      .large-8.columns
+        #map{:style => "width: auto; height: 350px; border: 1px solid #ccc; margin: 20px 0 20px"}
+        = f.hidden_field "lat"
+        = f.hidden_field "long"
+      .large-4.columns
+        .geo-select{:style => "margin: 20px 0 20px 0;"}
+          = content_tag 'div', '', data: { quarters: @quarters_id_to_location }, style: 'display:none'
+          = select_tag 'antraege_quarter', options_from_collection_for_select(@quarters, 'id', 'name'), include_blank: true, class: 'model_quarter chosen', data: { placeholder: 'Stadtteil'}
+          = select_tag 'antraege_street', '', class: 'model_street chosen', include_blank: true, data: { placeholder: 'Strasse'}
+        %a{:href => 'javascript:void(0)', :class => 'remove-location button radius tiny'} Marker löschen
+
+    .row
+      .large-8.columns
+        .submit
+          = f.submit "Speichern", :class => 'button radius'
+          %span.cancel
+            oder
+          = link_to "Abbrechen", :back, :class => 'cancel'
+
+= content_for :footer do
+  :javascript
+    $(document).ready(
+      function() {
+        $('.redactor_content').redactor({ lang: 'de', buttons: ['bold','italic','underline','|','unorderedlist','orderedlist','outdent','indent','|','link']});
+
+      L.drawLocal.draw.handlers.marker.tooltip.start = 'Marker auf der Karte mit einem Klick positionieren';
+      L.drawLocal.draw.toolbar.buttons.marker = 'Setze ein Punkt auf die Karte.';
+      L.Icon.Default.imagePath = '/assets';
+      var map;
+      if( $('#antraege_long').val().length > 0 ) {
+      map = new L.Map('map').setView(new L.LatLng($('#antraege_lat').val(), $('#antraege_long').val()), 13);
+      }
+      else {
+      map = new L.Map('map').setView(new L.LatLng(50.119182 , 8.677139), 13);
+      }
+      var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/okf.map-najwtvl1/{z}/{x}/{y}.png',
+          mapbox = new L.TileLayer(mapboxUrl, {"attribution": "\u00a9 <a href=\"http://www.openstreetmap.org/\" target=\"_blank\">OpenStreetMap</a> contributors"});
+      map.addLayer(mapbox,true);
+      map.scrollWheelZoom.disable();
+
+      var drawControl = new L.Control.Draw({
+          draw: {
+              polygon: false,
+              circle: false,
+              polyline: false,
+              rectangle: false
+          }
+      });
+
+      map.addControl(drawControl);
+
+      var drawnItems = new L.FeatureGroup();
+      map.addLayer(drawnItems);
+
+      if( $('#antraege_long').val().length > 0 ) {
+        var marker = L.marker([$("#antraege_lat").val(), $("#antraege_long").val()]);
+        drawnItems.addLayer(marker);
+      }
+
+      map.on('draw:created', function (e) {
+        drawnItems.clearLayers();
+        var marker = e.layer;
+        marker.bindPopup('A popup!');
+        drawnItems.addLayer(marker);
+        $("#antraege_long").val(marker._latlng.lng)
+        $("#antraege_lat").val(marker._latlng.lat)
+      });
+      map.addLayer(drawnItems);
+
+        $('.remove-location').click(function () {
+          drawnItems.clearLayers();
+          $("#antraege_long").val('');
+          $("#antraege_lat").val('');
+        });
+
+        $('#antraege_street').change(function() {
+          var coords = $(this).val().split(',');
+          $("#antraege_long").val(coords[1]);
+          $("#antraege_lat").val(coords[0]);
+
+          if( $('#antraege_long').val().length > 0 ) {
+            drawnItems.clearLayers();
+            var marker = L.marker(coords);
+            drawnItems.addLayer(marker);
+          }
+        });
+
+        var idToLocation = $('*[data-quarters]').data('quarters');
+        $('#antraege_quarter').change(function () {
+          var location = idToLocation[$(this).val()];
+          map.setView(new L.LatLng(location[1], location[0]), 13);
+        });
+      });

@@ -1,0 +1,5 @@
+%div{'data-subscribe-id' => @initiative.id}
+  - if @subscribed
+    = button_to "E-Mail Abo beenden", unsubscribe_initiative_path(@initiative), :method => :post, :remote => true, :class => 'button radius', :style => "width: 100%"
+  - else
+    = button_to "E-Mail Abo", subscribe_initiative_path(@initiative), :method => :post, :remote => true, :class => 'button radius', :style => "width: 100%"

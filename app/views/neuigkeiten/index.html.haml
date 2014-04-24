@@ -1,0 +1,35 @@
+= title "Veranstaltungen"
+
+%h1 Veranstaltungen
+
+.row#kalendar
+  .large-12.columns
+    %h2#month
+      = link_to "<", date: @date.prev_month
+      = l(@date, :format => "%B %Y")
+      = link_to ">", date: @date.next_month
+    = calendar @date do |date|
+      = date.day
+      - if @neuigkeiten_by_date[date]
+        %ul
+          - @neuigkeiten_by_date[date].each do |neuigkeit|
+            %li
+              = link_to neuigkeit.title, neuigkeiten_path(neuigkeit), :class => ("ini_event" if neuigkeit.initiative_id)
+.row
+  .large-3.large-offset-9.columns.spacebottom
+    .legende
+      %span{:style => "margin-top: -20px; float: right; display: block; background-color: #e96300; height: 20x; width: 80px; padding: 3px;"}
+        %span{:style => "color: #ffffff"}
+          Initiativen
+-# @neuigkeiten.each do |neuigkeit|
+  .row
+    .large-9.columns
+      %p
+        -# DateTime.parse(d).strftime('%d.%m.%Y')
+        = link_to neuigkeit.title, neuigkeit
+    .large-3.columns
+      - if can? :edit, neuigkeit
+        = link_to 'Bearbeiten', edit_neuigkeiten_path(neuigkeit)
+      - if can? :destroy, neuigkeit
+        = link_to neuigkeit, :confirm => "Sind Sie sich sicher?", :method => :delete, :class => 'tiny button delete has-tip tip-top', "data-tooltip" => "", :title => "Nutzer löschen" do
+          .icon-trash

@@ -1,0 +1,45 @@
+.nav-frame
+  .row
+    .large-3.medium-5.small-12.columns
+      .stadtteile-nav.left{:style => "margin-top: 8px;"}
+        %span.fa.fa-arrow-circle-right.fa-2x.left{:style => "margin-top: -5px; margin-right: 8px; color: #ffffff;"}
+
+        = select_tag 'pages_quarters', options_from_collection_for_select(all_quarters, 'id', 'name'), class: 'chosen stadtteil_dropdown', include_blank: true, data: { optional: true,placeholder: 'Stadtteil'}
+    .large-7.medium-7.columns
+      %ul.button-group
+        %li
+          = link_to initiatives_path, :class => add_active_class('initiatives') do
+            Initiativen
+        -#%li
+          = link_to "Lokal", antraeges_path, :class => add_active_class('antraege')
+        -#%li
+          - unless current_user
+            = link_to "Community", '#', "data-reveal-id" => "login-window", class: "button secondary"
+          - else
+            = link_to "Community", profiles_path, :class => add_active_class('profiles')
+        %li
+          = link_to "Blog", blogs_path, :class => add_active_class('blog')
+        %li
+          = link_to "Einführung", static_path('einfuehrung'), :class => add_active_class('pages', 'show', 'slug', "ueber-uns")
+        %li.show-for-large-up
+          = link_to "Offener Haushalt", "http://haushalt.frankfurt-gestalten.de/", :class => "button secondary", :target => "_blank"
+    .large-2.medium-12.columns
+      = form_tag search_path, method: :get, :class => "search-box" do
+        .row.collapse
+          .small-9.columns
+            = text_field_tag 'q', nil, :placeholder => "Suchen"
+          .small-3.columns
+            %span.postfix
+              %button{type: "submit", class: "button secondary"}
+                .fa.fa-search.fa-lg
+.row.spacebottom
+  .large-10.columns.large-centered.center
+    - if flash[:notice]
+      .alert-box.round.success
+        = flash[:notice]
+    - if flash[:alert]
+      .alert-box.round
+        = flash[:alert]
+    - if flash[:error]
+      .alert-box.alert.round
+        = flash[:error]

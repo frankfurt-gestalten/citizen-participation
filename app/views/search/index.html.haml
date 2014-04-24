@@ -1,0 +1,43 @@
+= title "Suchergebnis: " + params[:q] if params[:q]
+
+.row.search.index
+  .large-12.columns
+    %h1
+      Suchergebnis
+
+    .row
+      .small-8.columns
+        #search
+          = form_tag search_path, method: :get, :class => "" do
+            = text_field_tag 'q', params[:q]
+      .small-4.columns
+        = submit_tag 'Suchen', :class => "button radius large"
+
+    -#.row
+      .small-7.columns
+        %h3
+          = @count
+          Treffer
+
+    - if @results.present?
+      .row
+        .large-8.columns
+          - @results.each do |result|
+            .shape.bright-grey
+              %h3
+                = link_to truncate(result.title, length: 220), result
+              %p
+                = truncate(strip_tags(result.content), length: 250)
+        .large-4.columns
+          %p
+            Per E-Mail über neue Inhalte zu dem Thema informiert werden.
+          = link_to 'Stichwort abonnieren', new_search_subscription_path(query: params[:q]), class: 'button secondary radius'
+
+
+    - else
+      .row
+        .large-9.columns
+          %h4
+            Leider kein Treffer.
+
+    = paginate @results

@@ -1,0 +1,8 @@
+%div{style: 'display: none'}
+  - initiatives.each do |initiative|
+    %div{class: 'marker-popup', data: { id: initiative.id }}
+      = link_to initiative_path(initiative) do
+        %b= initiative.title
+      %br
+      = truncate_html(initiative.content.html_safe, :length => 50)
+      = link_to 'Zur Initiative', initiative_path(initiative)

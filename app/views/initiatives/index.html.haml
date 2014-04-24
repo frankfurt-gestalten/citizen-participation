@@ -1,0 +1,120 @@
+= title "Initiativen"
+
+.row.initiative.index
+  .large-6.columns
+    #map{:style => "width: auto; height: 350px; border: 1px solid #ccc; margin-bottom: 20px;"}
+    .content_bottom
+      = render_widgets 'content_bottom'
+
+  .large-6.columns
+    %h1
+      Initiativen
+    %p
+      Initiativen stehen im Mittelpunkt von Frankfurt Gestalten. Hier kannst Du Dein Anliegen und Deine Ideen einbringen. Viele andere Bürger Frankfurts haben hier bereits Ihre Initiativen eingereicht und viele Mitglieder oder Politiker die Stadt Frankfurt haben mitdiskutiert.
+    %p
+      Damit eine Initiative auch umgesetzt werden kann, braucht sie möglichst viele Unterstützter. Deshalb sollte sie über verschiedene Kanäle beworben werden. Bitte hilf mit, Initiativen bekannter zu machen! Vielen Dank!
+
+    - if params[:filter]
+      %h3
+        = params[:filter]
+
+    .row
+      .large-6.columns
+        = form_tag(initiatives_path, :class => "filter_form", :method => :get) do
+          = select_tag 'quarter', options_from_collection_for_select(@quarters, 'id', 'name', @quarter_id), class: 'chosen', include_blank: true, data: { optional: true, placeholder: 'Stadtteil auswählen' }, onchange: "$(this).parent('form').submit();"
+          -#= select_tag 'filter', options_from_collection_for_select(@categories, 'name', 'name'), class: 'chosen', include_blank: true, data: { optional: true, placeholder: 'Themenfilter' }, onchange: "$(this).parent('form').submit();"
+        - if params[:quarter]
+          %p{:style => "margin: 10px 0 0 20px;"}
+            = link_to "Alle Initiativen", initiatives_path
+      .large-6.columns
+        = render "widgets/start_initiative"
+
+.row.initiative.index
+  .large-12.columns
+    .row
+      - if @initiatives.blank?
+        %h3
+          Keine Initiativen
+      - @initiatives.each do |initiative|
+        - if initiative.visible == true or can? :update, Initiative
+          .large-8.columns
+            .shape.bright-grey
+              - if initiative.user
+                %span.username
+                  - if current_user
+                    = link_to image_tag(avatar_url(initiative.user, 50), alt: initiative.user.username, width: "50", height: "50", :class => "avatar"), profile_path(initiative.user)
+                    = link_to initiative.user.username, profile_path(initiative.user)
+                  - else
+                    = initiative.user.username
+              %span.date
+                = l initiative.updated_at, :format => :short
+
+              %h3.heading-post
+                = link_to initiative.title, initiative_path(initiative)
+                - if initiative.visible != true
+                  .label.round.alert
+                    Nicht veröffentlicht
+              .row
+                - if foto = initiative.fotos.first
+                  - large = '8'
+                - else
+                  - large = '12'
+                .dummy{:class => "large-" + large + " columns"}
+                  %p
+                    = truncate(initiative.content.strip_tags, length: 160)
+                    = link_to "weiter lesen", initiative_path(initiative)
+                - if foto = initiative.fotos.first
+                  .large-4.columns
+                    = link_to image_tag(foto.file_url(:thumb).to_s, width: 125, height: 125, :class => 'photo'), foto.file_url(:lightbox).to_s, :class => "colorbox th radius", :target => "_blank"
+          .large-4.columns
+            .shape.bright-grey
+              %ul.side-nav.activity
+                %li
+                  - if initiative.last_activity_at >= Date.today - 30
+                    .fa.fa-smile-o
+                    .label.radius.success
+                      Aktiv
+                  - elsif initiative.last_activity_at <= Date.today - 30 and initiative.last_activity_at >= Date.today - 90
+                    .fa.fa-meh-o
+                    .label.radius.secondary
+                      Wenig aktiv
+                  - elsif initiative.last_activity_at <= Date.today - 90
+                    .fa.fa-frown-o
+                    .label.radius.alert
+                      Inaktiv
+                  %span{"data-tooltip" => "", :class => "aktiv has-tip tip-top", :title => "Die Aktivität hängt davon ab, wann eine Initiative das letzte Mal aktualisiert oder kommentiert wurde. Aktiv: In den letzten 30 Tagen. Wenig aktiv: In den letzten 90 Tagen. Inaktiv: Darüber hinaus." }
+                    Was heißt das?
+                %li
+                  .fa.fa-comment
+                  = initiative.comments.count
+                  = "Kommentar".pluralize(initiative.comments.count)
+                %li
+                  .fa.fa-users
+
+                  = initiative.supporters.count
+                  Unterstützer
+              = render 'initiatives/social_media_buttons', url: initiative
+
+
+= paginate @initiatives
+
+= content_for :footer do
+  %script{ :type => 'text/javascript' }
+    function initialize() {
+    var map = new L.Map('map').setView(new L.LatLng(#{@map_lat}, #{@map_lng}), #{@map_zoom});
+    var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/okf.map-najwtvl1/{z}/{x}/{y}.png',
+    mapbox = new L.TileLayer(mapboxUrl, {"attribution": "\u00a9 <a href=\"http://www.openstreetmap.org/\" target=\"_blank\">OpenStreetMap</a> contributors"});
+    L.Icon.Default.imagePath = '/assets';
+    map.addLayer(mapbox,true);
+    map.scrollWheelZoom.disable();
+    var initiativeIcon = L.AwesomeMarkers.icon({prefix: 'fa', icon: 'bullhorn', markerColor: 'red', iconColor: '#ffffff'});
+    - i = 0
+    - @initiatives_map.each do |initiative|
+      - i += 1
+      - if initiative.lat.present?
+        marker#{i} = L.marker([#{initiative.lat}, #{initiative.long}], { icon: initiativeIcon }).addTo(map);
+        marker#{i}.bindPopup('<p><b>Initiative</b><br><a href="/initiativen/#{initiative.id}">#{initiative.title}</a></p>');
+    }
+    $(document).ready(function() {
+    initialize()
+    });

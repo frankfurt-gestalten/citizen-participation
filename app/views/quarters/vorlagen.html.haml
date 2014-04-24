@@ -1,0 +1,50 @@
+- title "Anträge Ortsbeirat #{params[:ob]}"
+
+
+.row.antraege.quarter.index
+  .large-12.columns
+    %h1 Anträge des Ortsbeirats #{params[:ob]}
+    - @antraeges.each do |antraege|
+      .row
+        .large-8.columns
+          .shape
+            %h3
+              = link_to truncate(antraege.title, length: 100), antraege_path(antraege)
+            %p
+              = truncate_html(antraege.content.strip_tags, length: 170)
+              = link_to "weiter lesen", antraege_path(antraege)
+
+        .large-4.columns
+          .shape.bright-grey
+            %h4
+              = antraege.partei
+            %ul
+              %li
+                = antraege.nummer
+              %li
+                Erstellt:
+                = l antraege.datum, :format => :short
+              %li
+                Zuletzt aktualisiert:
+                = l antraege.aktualisiert, :format => :short
+            - if antraege.link
+              = link_to 'Link zum Original Dokument', antraege.link, "data-tooltip" => "", :rel => "nofollow", :title => "Link zum Original Dokument (Parlamentsinformationssystem - PARLIS - der Stadtverordnetenversammlung Frankfurt am Main)", :target => "_blank", :class => "has-tip tip-top button tiny radius"
+
+            - if can? :edit, antraege
+              - if antraege.lat
+                .label.round.secondary
+                  Manueller Ort
+              - else
+                .label.round.secondary
+                  Kein manueller Ort
+              - if antraege.check == true
+                .label.round
+                  Geprüft
+            - if can? :edit, antraege
+              = link_to 'Bearbeiten', edit_antraege_path(antraege), :class => "button tiny"
+            - if can? :destroy, antraege
+              = link_to 'Löschen', antraege, :method => :delete, :data => { :confirm => 'Sind Sie sich sicher?' }, :class => "button tiny"
+
+
+= paginate @antraeges
+

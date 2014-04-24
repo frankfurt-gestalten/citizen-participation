@@ -1,0 +1,14 @@
+#widget.shape.bright-grey
+  %h3
+    %span.backicon.antraege-back
+      .fa.fa-file-text
+    Neue Anträge
+  %ul.side-nav
+    - @antraeges_recent.each do |antraege|
+      %li
+        #{antraege.partei}
+        = link_to truncate(antraege.title, :length => 80, :omission => '...'), antraege_path(antraege)
+  %p
+    %span.fa.fa-arrow-circle-right.fa-lg
+    = link_to "mehr Vorlagen aus dem Ortsbeirat", vorlagen_quarter_path(ob: @ob_nummer.ob)
+

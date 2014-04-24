@@ -1,0 +1,10 @@
+Hallo #{@initiative.user.username},
+\
+Glückwunsch! Deine Initiative hat einen neuen Unterstützer.
+\
+#{@supporter.username} unterstützt folgende Initiative:
+= @initiative.title
+\
+= initiative_url(@initiative)
+\
+= render "/initiativen_mailer/signatur"

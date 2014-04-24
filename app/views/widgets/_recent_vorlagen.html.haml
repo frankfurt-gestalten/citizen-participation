@@ -1,0 +1,17 @@
+#widget.shape.bright-grey
+  %h3
+    %span.backicon.antraege-back
+      .fa.fa-file-text
+    Neue Vorlagen
+  - if @antraeges
+    %ul.side-nav
+      - @antraeges.recent.each do |antraege|
+        %li
+          = antraege.partei
+          = truncate(antraege.title, :length => 80, :omission => '...')
+          = link_to "mehr", antraege_path(antraege)
+  - else
+    Keine Vorlagen
+  %p
+    = link_to "mehr Vorlagen", antraeges_path
+

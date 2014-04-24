@@ -1,0 +1,44 @@
+- title @blog.title
+
+.row.blog.show
+  .large-8.medium-8.columns
+    .row
+      .large-9.columns
+        %h1
+          = @blog.title
+        %p
+          .username
+            = link_to image_tag(avatar_url(@blog.user, 25), alt: @blog.user.username, width: "25", height: "25", :class => "avatar"), profile_path(@blog.user)
+            - if current_user
+              = link_to @blog.user.username, profile_path(@blog.user)
+            - else
+              = @blog.user.username
+            = l @blog.created_at, :format => :short
+      .large-3.columns
+        - if can? :edit, @blog
+          = link_to "Bearbeiten", edit_blog_path(@blog), :class => 'small button secondary radius edit'
+        -# if can? :destroy, @page
+          = link_to 'X', @blog, :confirm => "Sind Sie sich sicher?", :method => :delete, :class => 'small radius button delete'
+    - if foto = @blog.fotos.first
+      = image_tag(foto.file_url(:blog_large).to_s, :class => 'photo')
+
+    %p
+      = @blog.content.html_safe
+    %p
+      %b
+        #{pluralize(@blog.comments.count(:id), "Kommentar")}
+
+    - if @blog_comments.present?
+      = nested_messages @blog_comments if @blog_comments
+    %a{:name => "comment"}
+    %h4
+      Kommentar
+
+    = render :partial => "comments/form", :locals => {:commentable => @blog}
+
+  .large-4.medium-4.columns
+    .shape.bright-grey
+      = render 'initiatives/social_media_buttons', url: @blog
+    = render 'widgets/newsletter_signup'
+    = render 'widgets/recent_updated_initiatives'
+    = render 'widgets/recent_comments'

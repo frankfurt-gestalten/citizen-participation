@@ -1,0 +1,45 @@
+- title @neuigkeiten.title
+
+.row
+  .large-12.columns
+    .row
+      .large-9.columns
+        %h1
+          = @neuigkeiten.title
+      .large-3.columns.spacetop
+        - if can? :edit, @neuigkeiten
+          = link_to "Bearbeiten", edit_neuigkeiten_path(@neuigkeiten), :class => 'small radius button secondary edit'
+        - if can? :destroy, @neuigkeiten
+          = link_to "X", @neuigkeiten, :confirm => "Sind Sie sich sicher?", :method => :delete, :class => 'small radius button delete'
+    .row
+      .large-7.columns
+        %p
+          - if @neuigkeiten.datum
+            = @neuigkeiten.datum.strftime('%d.%m.%Y')
+        %p
+          Event zur Initiative:
+          = link_to @neuigkeiten.initiative.title, @neuigkeiten.initiative
+        %p
+          = @neuigkeiten.description.try(:html_safe)
+        %p
+          - if @neuigkeiten.link
+            = link_to "Mehr Infos", @neuigkeiten.link, :target => "_blank"
+      .large-5.columns
+        - if @neuigkeiten.latitude.to_i > 0
+          #map{:style => "width: auto; height: 350px; border: 1px solid #ccc;"}
+
+
+- if @neuigkeiten.latitude.to_i > 0
+  = content_for :footer do
+    :javascript
+      var map = new L.Map('map').setView(new L.LatLng(#{@neuigkeiten.latitude}, #{@neuigkeiten.longitude}), 17);
+
+      var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/okf.map-najwtvl1/{z}/{x}/{y}.png',
+          mapbox = new L.TileLayer(mapboxUrl, {"attribution": "\u00a9 <a href=\"http://www.openstreetmap.org/\" target=\"_blank\">OpenStreetMap</a> contributors"});
+      map.addLayer(mapbox,true);
+      map.scrollWheelZoom.disable();
+
+    %script{ :type => 'text/javascript' }
+      - if @neuigkeiten.latitude.present?
+        var icon = L.AwesomeMarkers.icon({icon: 'coffee', color: 'red'});
+        marker = L.marker([#{@neuigkeiten.latitude}, #{@neuigkeiten.longitude}], { icon: icon }).addTo(map);

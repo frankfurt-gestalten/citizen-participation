@@ -1,0 +1,32 @@
+- title @quarter.name
+
+.row.quarter.show
+  .large-6.columns
+    %h1
+      = @quarter.name
+  .large-6.columns
+    #subcribe_quarter.right{style: "position: relative; top: 20px;"}
+      = render 'subscribe_button'
+
+.row.quarter.show
+  .large-4.columns
+    = render 'widgets/recent_vorlagen_quarter'
+  .large-4.columns
+    = render 'widgets/recent_iniatives'
+    = render 'widgets/recent_constructions'
+  .large-4.columns
+    = render 'widgets/recent_comments'
+
+.row.quarter.show
+  .large-4.large-centered.columns
+    .filter-quartiere{style: "width: 470px; margin-bottom: 5px;"}
+      = select_tag 'streets', options_from_collection_for_select(@streets, 'coordinates', 'name'), class: 'chosen', include_blank: true, data: { optional: true, placeholder: 'Strasse auswählen' }
+.map-container
+  #map.quarter-page{:style => "width: auto; height: 400px; border: 1px solid #ccc;", :data => { coords: [@quarter.lat, @quarter.long], initiatives: @initiatives.to_json, antraeges: @antraeges.to_json, constructions: @constructions.to_json }}
+  #spinner
+
+
+
+
+= render 'initiatives/markers', initiatives: @initiatives
+

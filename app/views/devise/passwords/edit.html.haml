@@ -1,0 +1,21 @@
+- title "Neues Passwort"
+
+.row.user
+  .large-10.large-offset-3.columns.shape.bright-grey
+    %h2
+      Passwort ändern
+    = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
+      = devise_error_messages!
+      = f.hidden_field :reset_password_token
+      .row
+        .large-12.columns
+          = f.label "Neues Passwort"
+          = f.password_field :password
+      .row
+        .large-12.columns
+          = f.label "Passwort bestätigen"
+          = f.password_field :password_confirmation
+      .row
+        .large-12.columns.spacebottom
+          = f.submit "Passwort ändern", :class => "button radius"
+          -#= render "devise/shared/links"

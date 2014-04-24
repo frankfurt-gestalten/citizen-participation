@@ -1,0 +1,13 @@
+%head
+  %meta{:charset => "utf-8"}/
+  / Uncomment to make IE8 render like IE7
+  / <meta http-equiv="X-UA-Compatible" content="IE=7" />
+  / Set the viewport width to device width for mobile
+  %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+  %title
+    Frankfurt gestalten -
+    = content_for?(:title) ? yield(:title) : ""
+  = stylesheet_link_tag "application", :media => "all"
+  = auto_discovery_link_tag :atom, "/initiativen.atom"
+  = auto_discovery_link_tag :atom, "/vorlagen.atom"
+  = csrf_meta_tags

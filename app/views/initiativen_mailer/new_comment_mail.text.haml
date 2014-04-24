@@ -1,0 +1,12 @@
+Hallo #{@subscriber.username},
+\
+Es gibt eine neue Aktivität zu folgender Initiative:
+\
+#{@initiative.title}
+= initiative_url(@initiative)
+\
+#{@comment_author} hat folgenden Kommentar geschrieben:
+\
+= @comment.content
+\
+= render "/initiativen_mailer/signatur"

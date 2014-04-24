@@ -1,0 +1,64 @@
+= title 'Nutzerverwaltung'
+
+%h1
+  Nutzerverwaltung
+%table
+  %thead
+    %th
+      Nr.
+    %th
+      Avatar
+    %th
+      Benutzername
+    %th
+      E-Mail
+    %th
+      Mitglied seit
+    %th
+      Kommentare
+    %th
+      Initiativen
+    -#%th
+      Status
+    %th
+    %th
+    %th
+  %tbody
+    - @users.each_with_index do |user, index|
+      %tr
+        %td
+          = index +1
+        %td
+          = image_tag(avatar_url(user, 50), alt: user.username, class: "photo")
+        %td
+          = link_to user.username, profile_path(user)
+        %td
+          = user.email
+        %td
+          = time_ago_in_words(user.created_at)
+          = time_ago_in_words(user.last_sign_in_at) if user.last_sign_in_at
+        %td
+          = user.comments.count
+        %td
+          = user.initiatives.count
+        -#%td
+          - if user.blocked?
+            .label
+              Gesperrt
+          - if user.notes?
+            .label
+              Hinweis
+        - if !user.admin? and !user.superadmin?
+          - if can? :destroy, user
+            %td
+              = link_to profile_path(user), :confirm => "Sind Sie sich sicher?", :method => :delete, :class => 'tiny button delete' do
+                Remove
+          -#%td
+            = render 'user_actions', user: user
+          %td
+            = render 'block_buttons', user: user
+  %hr
+
+= paginate @users
+
+

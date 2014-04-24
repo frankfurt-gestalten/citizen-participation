@@ -1,0 +1,38 @@
+= title "E-Mail Abos"
+
+%h1
+  E-Mail Abos
+%p
+  Du bekommst immer eine E-Mail, wenn es einen neuen oder aktualisierte Inhalt mit Deinem Suchwort gibt.
+
+%h2
+  Themen
+- @subscriptions.each do |subscription|
+  .row{'data-search-subscription-id' => subscription.id}
+    .large-6.columns
+      %h4.subheader
+        Suchabfrage:
+        = subscription.query
+    .large-6.columns
+      = link_to 'Löschen', subscription, :method => :delete, :class => "small button secondary radius", :remote => true
+  %hr
+
+%h2
+  Initiativen
+- if @subscriptions_iniatives
+  - @subscriptions_iniatives.each do |subscription_iniatives|
+    .row
+      .large-6.columns
+        %h4.subheader
+          = subscription_iniatives.subscribable.title
+      .large-6.columns
+        - @initiative = subscription_iniatives.subscribable
+        - @subscribed = true
+        = render 'initiatives/subscribe_button'
+    %hr
+  - content_for :inline_js do
+    :javascript
+      $(document).on('ajax:before', 'div[data-subscribe-id] form', function () {
+        $(this).closest('div').attr('data-subscribe-id', null);
+        $(this).closest('.row').slideUp();
+      });

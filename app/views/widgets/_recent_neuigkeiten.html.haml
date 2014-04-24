@@ -1,0 +1,13 @@
+#widget.shape.grey
+  %h4
+    Neueste Veranstaltungen
+  %ul.side-nav
+    - Neuigkeiten.recent.each do |neuigkeit|
+      %li
+        Aachen
+        |
+        = truncate(neuigkeit.title, :length => 50, :omission => '...')
+        -#= truncate(neuigkeit.content, :length => 60, :omission => '...').html_safe
+        = link_to "mehr", neuigkeiten_path(neuigkeit)
+  = link_to "mehr Veranstaltungen", neuigkeitens_path
+

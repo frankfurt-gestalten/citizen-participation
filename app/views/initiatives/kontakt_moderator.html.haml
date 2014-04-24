@@ -1,0 +1,15 @@
+= title "Nachricht an Moderatoren schicken"
+
+.row.initiative.contact
+  .large-10.columns
+    %h1
+      Nachricht an Moderatoren schicken
+
+    %p
+      Hier kannst du eine Nachricht an die Moderatoren schicken.
+
+
+    = form_for 'message', :url => contact_moderator_initiative_path(@initiative), :html => { :method => :post, :class => "" } do |f|
+      = f.text_area :body, :rows => 20
+
+      = f.submit 'Senden', :class => "button radius"

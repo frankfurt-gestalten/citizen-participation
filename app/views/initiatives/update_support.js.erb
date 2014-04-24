@@ -1,0 +1,6 @@
+$('#support_button').html("<%= escape_javascript(render('support_button')) %>");
+<% if @supporting == false %>
+$('li.support-<%= current_user.id%>').slideUp(600);
+<% else %>
+$('ul#supporter').append('<li class="panel larger-font support-<%= current_user.id%>"><%= link_to current_user.username, profile_path(current_user) %><%= link_to image_tag(avatar_url(current_user, 25), alt: current_user.username, width: "25", height: "25"), profile_path(current_user)%></li>').slideDown(1000);
+<% end %>

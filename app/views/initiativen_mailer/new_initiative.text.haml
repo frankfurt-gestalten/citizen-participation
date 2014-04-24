@@ -1,0 +1,17 @@
+Hallo!
+\
+Es gibt eine neue Initiative:
+\
+von: #{@initiative.user.username} #{@initiative.user.email}
+
+\
+#{@initiative.title}
+\
+= @initiative.content
+\
+= @initiative.getan
+\
+= @initiative.erreicht
+\
+\
+= render "/initiativen_mailer/signatur"

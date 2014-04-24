@@ -1,0 +1,26 @@
+#widget.shape.bright-grey
+  %h3
+    %span.backicon.initiative-back
+      .fa.fa-lightbulb-o
+    Initiativen
+  - if recent_initiatives.present?
+    %ul.side-nav
+      - recent_initiatives.each do |initiative|
+        %li
+          = link_to image_tag(avatar_url(initiative.user, 25), alt: initiative.user.username, width: "25", height: "25", :class => "avatar"), profile_path(initiative.user)
+          - if initiative.user.username
+            - if current_user
+              = link_to initiative.user.username, profile_path(initiative.user)
+            - else
+              = initiative.user.username
+            |
+          = truncate(initiative.title, :length => 80, :omission => '...')
+          -#= truncate(initiative.content, :length => 60, :omission => '...').html_safe
+          = link_to "mehr", initiative_path(initiative)
+  - else
+    %p
+      Keine Initiativen. Das sollte sich aber schnell ändern. Mach mit!
+    %p
+      %span.fa.fa-arrow-circle-right.fa-lg
+      = link_to "mehr Initiativen", initiatives_path
+

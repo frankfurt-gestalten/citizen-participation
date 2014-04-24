@@ -1,0 +1,2 @@
+module AntraegesHelper
+end

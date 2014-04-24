@@ -1,0 +1,16 @@
+#widget.shape.bright-grey
+  %h3
+    %span.backicon.antraege-back
+      .fa.fa-comment-o
+    Abgeordnetenwatch in FFM
+  - if @questions
+    %ul.side-nav
+      - @questions.each do |question|
+        %li
+          %p
+            = link_to question.title, question.link, target: "_blank"
+            = truncate(strip_tags(question.description), :length => 180, :omission => '...')
+            = link_to "mehr", question.link, target: "_blank"
+  - else
+    Keine Fragen
+

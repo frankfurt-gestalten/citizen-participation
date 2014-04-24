@@ -1,0 +1,20 @@
+= title 'Community'
+
+%h1
+  Community
+%table
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td
+          = link_to user.username, profile_path(user)
+        %td
+          %h4
+            = image_tag(avatar_url(user, 50), alt: user.username)
+        %td
+          %ul.inline-list
+            - user.public_fields.each do |field|
+              %li
+                = user.public_send(field)
+
+= paginate @users

@@ -1,0 +1,15 @@
+#widget.shape.bright-grey
+  %h3
+    %span.backicon.construction-back
+      .fa.fa-warning
+    Aktuelle Baustellen
+  - if @constructions.size > 0
+    %ul.side-nav
+      - @constructions.recent.each do |construction|
+        %li
+          = link_to (truncate(construction.description_long, :length => 50, :omission => '...')), construction_path(construction)
+          (#{l construction.start_date, :format => :short} - #{l construction.end_date, :format => :short})
+  - else
+    %p
+      Zur Zeit keine Baustellen in diesem Stadtteil. Gute Fahrt!
+

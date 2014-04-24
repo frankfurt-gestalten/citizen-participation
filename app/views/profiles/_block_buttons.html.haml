@@ -1,0 +1,12 @@
+%p{:class => "block-#{user.id}"}
+  - if user.blocked?
+    - if can? :unblock, User
+      = link_to unblock_profile_path(user), method: :post,remote: true, class: 'tiny button', :style => "color: #ffffff; margin-top: 18px"  do
+        %span.icon-flag{:style => "color: #ffffff;"}
+        Unblock
+
+  - else
+    - if can? :block, User
+      = link_to block_profile_path(user), method: :post, remote: true, class: 'tiny button', :style => "color: #ffffff; margin-top: 18px"  do
+        %span.icon-flag{:style => "color: #ffffff;"}
+        Block

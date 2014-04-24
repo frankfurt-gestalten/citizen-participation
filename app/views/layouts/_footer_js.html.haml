@@ -1,0 +1,16 @@
+:javascript
+  var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.crisscrossed.net/" : "http://piwik.crisscrossed.net/");
+  document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+
+  try {
+  var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 3);
+  piwikTracker.trackPageView();
+  piwikTracker.enableLinkTracking();
+  } catch( err ) {}
+
+= javascript_include_tag "application"
+:javascript
+  $(document).foundation();
+  $('a.login-window').foundation('reveal');
+= yield(:footer)
+= yield(:inline_js)

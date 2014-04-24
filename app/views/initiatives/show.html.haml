@@ -1,0 +1,146 @@
+- title @initiative.title
+
+.row.initiative.show
+  .large-8.medium-8.columns
+    %h1
+      %span.backicon.initiative-back
+        .fa.fa-lightbulb-o
+      = @initiative.title
+    .row
+      .large-6.columns
+        %p.spacetop
+          .username
+            - if @initiative.user.username
+              = link_to image_tag(avatar_url(@initiative.user, 50), alt: @initiative.user.username, width: "50", height: "50", :class => "avatar"), profile_path(@initiative.user)
+
+              #{link_to @initiative.user.username, profile_path(@initiative.user)}
+            - else
+              = @initiative.user.username
+          - if @initiative.visible != true
+            .label.round.alert
+              Nicht veröffentlicht
+      .large-6.columns
+        %span.right{style: "margin: 38px 20px 0 5px;"}
+          Akualisiert
+          = l @initiative.updated_at, :format => :short
+          %span.fa.fa-comments
+            = @initiative.comments.count
+
+    -#%dl.sub-nav
+      %dt
+        Kategorie:
+        - @initiative.categories.each do |cat|
+          %dd
+            %dt{:class => "active"}
+              = link_to cat.name, initiatives_path(:filter => cat.name)
+
+    %ul.small-block-grid-4
+      - for foto in @initiative.fotos
+        %li
+          = link_to image_tag(foto.file_url(:thumb).to_s, width: 125, height: 125, :class => 'photo'), foto.file_url(:lightbox).to_s, :class => "colorbox th radius"
+    %p
+      = auto_link(@initiative.content.html_safe)
+    %h3
+      Was willst du erreichen?
+    %p
+      = @initiative.erreicht.present? ? @initiative.erreicht.html_safe : "Kein Eintrag"
+    %h3
+      Was hast du bereits getan?
+    %p
+      = @initiative.getan.present? ? @initiative.getan.html_safe : "Kein Eintrag"
+
+    %p
+      %b
+        #{pluralize(@initiative.comments.count(:id), "Kommentar")}
+
+    - if @comments.present?
+      = nested_messages @comments if @comments
+    %h4
+      Kommentar
+    = render :partial => "comments/form", :locals => {:commentable => @initiative}
+
+
+  .large-4.medium-4.columns
+    %h2
+      Initiative
+
+    - if @initiative.lat?
+      #map{:style => "width: auto; height: 350px; border: 1px solid #ccc;"}
+    - if can? :edit, @initiative
+      .shape.bright-grey
+        - if can? :edit, @initiative
+          = link_to "Bearbeiten", edit_initiative_path(@initiative), :class => 'button small radius secondary edit'
+        - if can? :destroy, @initiative
+          = link_to "X", @initiative, :class => 'button small radius delete', :title => "Initiative löschen", :method => :delete, :data => { :confirm => 'Sind Sie sich sicher?' }
+        - if can? :edit, @initiative
+          %br
+          = link_to "Veranstaltung einfügen", new_neuigkeiten_path(initiative_id: @initiative.id), :class => 'button small radius secondary edit'
+        - if current_user == @initiative.user
+          = link_to 'Moderatoren kontaktieren', contact_moderator_initiative_path(@initiative), :class => 'button small radius secondary'
+    - if current_user != @initiative.user
+      .shape.bright-grey
+        - if current_user
+          = link_to 'Initiator kontaktieren', contact_initiative_path(@initiative), :class => ' button radius', :style => "width: 100%;"
+        - else
+          = link_to "Initiator kontaktieren", '#', "data-reveal-id" => "login-window", class: "button radius"
+        - if current_user
+          = render 'subscribe_button'
+        - else
+          = link_to "E-Mail Abo", '#', "data-reveal-id" => "login-window", class: "button radius"
+
+    .shape.bright-grey
+      %span{:style => "float: left; margin: 7px 10px 0 0;"} Teile die Initiative
+      = render 'initiatives/social_media_buttons', url: @initiative
+
+    .shape.bright-grey
+      - if current_user != @initiative.user
+        = render 'support_button'
+
+      %h3
+        .fa.fa-users
+        Unterstützer
+        .label.round{style: "top: -5px;"}
+          = @initiative.supporters.count
+      - if @initiative.supporters.exists? && current_user
+        %ul.no-bullet#supporter
+          - @initiative.supporters.each do |supporter|
+            %li.panel.larger-font{:class => "support-#{supporter.user.id}"}
+              = link_to image_tag(avatar_url(supporter.user, 25), alt: supporter.user.username, width: "25", height: "25", class: "avatar"), profile_path(supporter.user)
+              = link_to supporter.user.username, profile_path(supporter.user)
+
+      - else
+        %ul.no-bullet#supporter
+
+    - if @initiative.neuigkeitens.exists?
+      .shape.bright-grey
+        %h3 Termine
+        - @initiative.neuigkeitens.each do |neuigkeit|
+          %p
+            = l neuigkeit.datum, :format => :short
+            %br
+            = link_to neuigkeit.title, neuigkeiten_path(neuigkeit)
+          %p
+            = neuigkeit.description.html_safe
+    = render 'widgets/newsletter_signup'
+
+
+- if @initiative.lat?
+  = content_for :footer do
+    :javascript
+      $(document).ready(function () {
+      $(".support").click(function() {
+        $(this).addClass("fa").addClass("fa-spinner").addClass("fa-spin").delay(1000);
+      });
+
+      });
+      var map = new L.Map('map').setView(new L.LatLng(#{@initiative.lat}, #{@initiative.long}), 17);
+
+      var mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/okf.map-najwtvl1/{z}/{x}/{y}.png',
+          mapbox = new L.TileLayer(mapboxUrl, {"attribution": "\u00a9 <a href=\"http://www.openstreetmap.org/\" target=\"_blank\">OpenStreetMap</a> contributors"});
+      map.addLayer(mapbox,true);
+      map.scrollWheelZoom.disable();
+
+    %script{ :type => 'text/javascript' }
+      - if @initiative.lat.present?
+        var icon = L.AwesomeMarkers.icon({prefix: 'fa', icon: 'lightbulb-o', markerColor: 'red', iconColor: '#ffffff'});
+        marker = L.marker([#{@initiative.lat}, #{@initiative.long}], { icon: icon }).addTo(map);

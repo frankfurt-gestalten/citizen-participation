@@ -1,0 +1,18 @@
+= title "Nachricht an das Frankfurt Gestalten Team schicken"
+
+.row.page.contact
+  .large-10.columns
+    %h1
+      Nachricht an das Frankfurt Gestalten Team
+
+    %p
+      Hier kannst du eine Nachricht an uns schicken.
+
+    = form_for 'message', :url => contact_form_path, :html => { :method => :post, :class => "" } do |f|
+      - unless current_user
+        = f.text_field :name, :placeholder => "Name"
+        = f.text_field :email, :placeholder => "E-Mail"
+
+      = f.text_area :body, :rows => 20
+
+      = f.submit 'Senden', :class => "button radius"

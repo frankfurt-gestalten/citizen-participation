@@ -1,0 +1,16 @@
+- title "Alle Bilder"
+
+.row
+  .large-12.columns
+    %h1
+      Alle Bilder
+    %ul.small-block-grid-5
+      - @banners.each do |banner|
+        %li
+          = banner.title
+          %br
+          = image_tag(banner.file_url(:thumb).to_s, width: 125, height: 125, :class => 'box')
+          %br
+          - if can? :destroy, banner
+            = link_to banner, :confirm => "Sind Sie sich sicher?", :method => :delete, :class => 'small button delete has-tip tip-top', "data-tooltip" => "", :title => "Bild löschen" do
+              .icon-trash

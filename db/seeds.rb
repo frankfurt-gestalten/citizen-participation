@@ -1,0 +1,1 @@
+Widget.create!(type: 'recent_comments')
