@@ -12,5 +12,16 @@
 :javascript
   $(document).foundation();
   $('a.login-window').foundation('reveal');
+  $(".close-tutorial").click(function(){
+    $('#request').foundation('reveal', 'close');
+    return false;
+  });
+  ouiBounce(document.getElementById('request'), {
+    aggressive: true,
+    callback: function() {
+    $('#request').foundation('reveal', 'open');
+    }
+  });
+
 = yield(:footer)
 = yield(:inline_js)

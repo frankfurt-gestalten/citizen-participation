@@ -20,6 +20,35 @@
       %a{:href => "https://github.com/frankfurt-gestalten", :target => "_blank"}
         %span.fa.fa-external-link
         Open Source Code
+#request.reveal-modal.medium{"data-reveal" => ""}
+  %h2
+    %i{:class => "icon-envelope"}
+    Wir bitten um deine Unterstützung!
+  %p
+    Frankfurt Gestalten ist ein ehrenamtliches Projekt und wir freuen uns über jede Unterstützung. Hilf uns Frankfurter Lokalpolitik transparenter zu machen!
+  %ul
+    %li
+      = link_to "Werde Mitglied von Frankfurt Gestalten", new_registration_path('user')
+    %li
+      Erzähle Freunden oder Kollegen von dieser Webseite.
+    %li
+      Empfehle uns auf
+      %a{href: "http://www.facebook.com/share.php?title=Frankfurt Gestalten&u=http%3A%2F%2Fwww.frankfurt-gestalten.de"} Facebook,
+      %a{href: "https://twitter.com/share?lang=de&text=Frankfurt Gestalten&url=http://www.frankfurt-gestalten.de"} Twitter,
+      oder
+      %a{href: "https://plus.google.com/share?hl=de&url=http://www.frankfurt-gestalten.de"} Google+
+    %li
+      Abonniere unseren Newsletter. Ein Mal in der Woche alles auf einen Blick!
+  %form{"accept-charset" => "UTF-8", action: "http://frankfurt-gestalten.us1.list-manage.com/subscribe/post?u=97be5218ca0ada0b90d8326ae&id=fc4198bf0b", method: "POST",name: "mc-embedded-subscribe-form", novalidate: "", target: "_blank"}
+    .mc-field-group
+      %input#mce-EMAIL.required.email{name: "EMAIL", type: "email", value: "E-Mail"}/
+    %div{style: "position: absolute; left: -5000px;"}
+      %input{name: "b_97be5218ca0ada0b90d8326ae_fc4198bf0b", type: "text", value: ""}/
+    %input#mc-embedded-subscribe.button.secondary.radius{name: "subscribe", type: "submit", value: "Abonnieren"}/
+  %a.close-tutorial
+    Ich hab leider gerade keine Zeit.
+  %a.close-reveal-modal ×
+
 #login-window.reveal-modal.medium{"data-reveal" => ""}
   .row.user
     .large-8.medium-12.columns
