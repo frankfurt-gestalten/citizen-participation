@@ -25,6 +25,8 @@
     %p
       = sanitize(auto_link(@antraege.begruendung.html_safe, :all, :target => "_blank"), tags: %w(p b i ul ol li u a), attributes: %w())
     %p
+      = sanitize(auto_link(@antraege.ergebnisse.html_safe, :all, :target => "_blank"), tags: %w(p b i ul ol li u a table tr td ), attributes: %w())
+    %p
       %b
         #{pluralize(@antraege.comments.count(:id), "Kommentar")}
 
@@ -62,7 +64,6 @@
       = link_to "Hier kommentieren", antraege_path(@antraege, anchor: "comment"), :class => 'small radius button secondary'
     = render 'widgets/newsletter_signup'
     = render 'widgets/abgeordnetenwatch'
-
     .shape.bright-grey
       %h3
         Ortsbeiräte
