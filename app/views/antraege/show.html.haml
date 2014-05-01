@@ -25,7 +25,7 @@
     %p
       = sanitize(auto_link(@antraege.begruendung.html_safe, :all, :target => "_blank"), tags: %w(p b i ul ol li u a), attributes: %w())
     %p
-      = sanitize(auto_link(@antraege.ergebnisse.html_safe, :all, :target => "_blank"), tags: %w(p b i ul ol li u table tr td ), attributes: %w())
+      = sanitize(auto_link(@antraege.ergebnisse.html_safe, :all, :target => "_blank"), tags: %w(p b i ul ol li u a table tr td ), attributes: %w(href))
     %p
       %b
         #{pluralize(@antraege.comments.count(:id), "Kommentar")}
