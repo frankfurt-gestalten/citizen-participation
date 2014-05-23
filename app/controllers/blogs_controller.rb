@@ -6,6 +6,7 @@ class BlogsController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @blogs }
+      format.atom { render :layout => false }
     end
   end
 
