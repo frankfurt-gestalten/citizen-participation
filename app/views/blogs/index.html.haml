@@ -2,7 +2,10 @@
 
 .row.blog.index
   .large-11.columns
-    %h1 Blog
+    %h1
+      Blog
+      = link_to "/blogs.atom" do
+        %span.fa.fa-rss-square.fa-lg
 
     - @blogs.each do |blog|
       .row{style: "margin-top: 40px;"}
