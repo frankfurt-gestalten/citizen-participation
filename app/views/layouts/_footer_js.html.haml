@@ -18,10 +18,9 @@
     $('#request').foundation('reveal', 'close');
     return false;
   });
-  ouiBounce(document.getElementById('request'), {
-    callback: function() {
-    $('#request').foundation('reveal', 'open');
-    }
+  ouibounce(document.getElementById('request'), {
+  sitewide: true,
+    callback: function() { $('#request').foundation('reveal', 'open'); }
   });
 
 = yield(:footer)
