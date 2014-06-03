@@ -6,7 +6,7 @@ class Antraege < ActiveRecord::Base
   #include PgSearch
   #multisearchable :against => [:title, :content, :begruendung, :ergebnisse]
 
-  attr_accessible :begruendung, :datum, :ergebnisse, :title, :partei, :link, :lat, :long, :aktualisiert, :datum, :content
+  attr_accessible :begruendung, :datum, :ergebnisse, :title, :partei, :link, :lat, :long, :aktualisiert, :datum, :content, :ob_nummer, :check
 
   has_many :comments, as: :commentable
   has_and_belongs_to_many :categories, join_table: 'categories_antraeges'

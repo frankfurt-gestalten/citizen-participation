@@ -12,25 +12,6 @@ $(document).ready(function () {
   map.addLayer(mapbox,true);
   map.scrollWheelZoom.disable();
 
-  // var minimap = new L.Map('minimap',{ zoomControl:false, attributionControl: false }).setView(new L.LatLng(50.709047 , 6.180028), 9);
-  // minimapbox = new L.TileLayer(mapboxUrl);
-  // minimap.addLayer(minimapbox,true);
-  // minimap.scrollWheelZoom.disable();
-  // minimap.doubleClickZoom.disable();
-  // minimap.dragging.disable();
-
-  // for(var i = 0; i < polygon.length; i ++) {
-  //   var currentPolygon = L.polygon(polygon[i], { stroke: false});
-  //   currentPolygon.addTo(minimap);
-  // }
-
-  // var minimapRectangle = L.rectangle(map.getBounds(), {color: '#ff7800', weight: 1}).addTo(minimap);
-
-  // var updateMinimap = function () {
-  //   minimapRectangle.setBounds(map.getBounds());
-  // };
-  // map.addEventListener('move', updateMinimap);
-
   var markers = new L.MarkerClusterGroup();
   map.addLayer(markers);
 
@@ -52,7 +33,7 @@ $(document).ready(function () {
       var antraege = antraeges[i];
       var icon = L.AwesomeMarkers.icon({prefix: 'fa', icon: 'file-text', markerColor: 'blue', iconColor: '#ffffff'});
       var marker = L.marker([antraege.lat, antraege.long], { icon: icon });
-      marker.bindPopup('<p><b>Antrag Ortsbeirat</b><br><a href="/vorlagen/' + antraege.id + '">' + antraege.title + '</a></p>');
+      marker.bindPopup('<p><b>Antrag Ortsbeirat</b> ('+ $.datepicker.formatDate('dd.mm.yy', new Date(antraege.datum)) + ')<br><a href="/vorlagen/' + antraege.id + '">' + antraege.title + '</a></p>');
       markers.addLayer(marker);
     }
 

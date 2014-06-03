@@ -10,7 +10,7 @@ class PagesController < ApplicationController
       hash[quarter.id] = { coords: [quarter.lat, quarter.long] }
     end
 
-    @antraeges = Antraege.where("lat != ''").select([:id, :title, :lat, :long]).order('datum DESC').limit(100)
+    @antraeges = Antraege.where("lat != ''").select([:id, :title, :lat, :long, :datum]).order('datum DESC').limit(100)
 
     @constructions = Construction.where("lat != ''").current.order(:updated_at).limit(100)
 

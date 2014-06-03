@@ -7,7 +7,7 @@ class QuartersController < ApplicationController
     @quarters = Quarter.all
     @ob_nummer = Quarter.find(params[:id])
     @antraeges_recent = Antraege.where('ob_nummer = ?', @ob_nummer.ob).order('datum DESC').limit(5)
-    @antraeges = Antraege.with_location.within_quarter(params[:id]).select([:id, :title, :lat, :long]).order('datum DESC').limit(100)
+    @antraeges = Antraege.with_location.within_quarter(params[:id]).select([:id, :title, :lat, :long, :datum]).order('datum DESC').limit(100)
     @comments = Comment.for_items(@initiatives.pluck(:id), @antraeges.pluck(:id))
     @constructions = Construction.with_location.within_quarter(params[:id]).current.order('start_date DESC').limit(100)
   end
