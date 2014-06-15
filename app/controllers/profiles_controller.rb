@@ -16,7 +16,7 @@ class ProfilesController < ApplicationController
   end
 
   def manage_users
-    @users = User.order('last_sign_in_at desc').page(params[:page]).per(25)
+    @users = User.order('created_at desc').page(params[:page]).per(25)
   end
 
   def assign_moderator
