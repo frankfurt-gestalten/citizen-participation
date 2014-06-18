@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
   def ensure_valid_recaptcha
     if !current_user
       if !verify_recaptcha
-        redirect_to :back, alert: 'Der SPAM-Schutz Test wurde leider nicht bestanden.'
+        redirect_to :back, :flash => { :error => "Der SPAM-Schutz Test wurde leider nicht bestanden." }
       end
     end
   end
