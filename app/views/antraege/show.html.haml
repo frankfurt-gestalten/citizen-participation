@@ -63,22 +63,22 @@
       %br
       = link_to "Hier kommentieren", antraege_path(@antraege, anchor: "comment"), :class => 'small radius button secondary'
     = render 'widgets/newsletter_signup'
-    = render 'widgets/abgeordnetenwatch'
     .shape.bright-grey
       %h3
         Ortsbeiräte
       %p
         Frankfurt hat 16 Ortsbeiräte mit 284 ehrenamtlichen Mitgliedern aus verschiedenen Parteien. Diese Ortsbeiräte halten regelmäßige Sitzungen ab, bei denen Du teilnehmen kannst. Auf der Webseite der Stadt Frankfurt ist die
-        %a{href: "http://www.frankfurt.de/sixcms/detail.php?id=3470", :target => "_blank"} aktuelle Liste 
+        %a{href: "http://www.frankfurt.de/sixcms/detail.php?id=3470", :target => "_blank"} aktuelle Liste
         der Ortsbeiräte mit den nächsten Sitzungsterminen.
       %p
         Die jeweils für Deine Straße verantwortlichen Ortsbeiratsmitglieder können auf
-        %a{href: "http://www.frankfurt.de/sixcms/list.php?page=7405_strassensuche_polit_ehrenbeamte_2&sv[STATUS]=freigeschaltet&sv[VERWENDUNGSZWECK]=*SIS&sv[fra_approxim][view]=V_FRA_REGIONALDATEI_5001&sv[fra_approxim][strasse]=&sv[fra_approxim][hausnr]=", :target => "_blank"} dieser Seite 
+        %a{href: "http://www.frankfurt.de/sixcms/list.php?page=7405_strassensuche_polit_ehrenbeamte_2&sv[STATUS]=freigeschaltet&sv[VERWENDUNGSZWECK]=*SIS&sv[fra_approxim][view]=V_FRA_REGIONALDATEI_5001&sv[fra_approxim][strasse]=&sv[fra_approxim][hausnr]=", :target => "_blank"} dieser Seite
         gesucht werden.
 
         Weitere Informationen zu den Ortsbeiräten gibt es auf
         %a{href: "http://www.frankfurt.de/sixcms/detail.php?id=3470", :target => "_blank"} der Webseite der Stadt Frankfurt.
 
+    = render 'widgets/abgeordnetenwatch'
 
 - if @antraege
   = content_for :footer do
