@@ -77,4 +77,8 @@ class User < ActiveRecord::Base
     update_attributes(params)
   end
 
+  before_save do
+    self.email.downcase! if self.email
+  end
+
 end
