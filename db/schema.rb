@@ -11,19 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140210191326) do
+ActiveRecord::Schema.define(:version => 20141107215524) do
 
   create_table "antraeges", :force => true do |t|
-    t.date     "aktualisiert"
     t.string   "link"
-    t.date     "datum"
-    t.string   "partei"
-    t.string   "nummer"
+    t.string   "verfasser"
     t.text     "title"
     t.text     "begruendung"
     t.text     "content"
-    t.text     "ergebnisse"
-    t.integer  "ob_nummer"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.boolean  "check"
@@ -31,7 +26,26 @@ ActiveRecord::Schema.define(:version => 20140210191326) do
     t.string   "long"
     t.string   "lat"
     t.datetime "last_comment_at"
+    t.integer  "docid"
+    t.string   "kommune"
+    t.datetime "last_updated"
   end
+
+  create_table "antraeges_consultation", :force => true do |t|
+    t.string   "status"
+    t.string   "action"
+    t.string   "committee"
+    t.string   "toplfdnr"
+    t.text     "meeting"
+    t.integer  "silfdnr"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "antraege_id"
+    t.date     "update"
+    t.text     "decision"
+  end
+
+  add_index "antraeges_consultation", ["antraege_id"], :name => "index_antraeges_consultation_on_antraege_id"
 
   create_table "banners", :force => true do |t|
     t.string   "title"
@@ -101,13 +115,14 @@ ActiveRecord::Schema.define(:version => 20140210191326) do
     t.datetime "end_date"
     t.string   "lat"
     t.string   "long"
-    t.string   "description_long"
+    t.text     "description_long"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.integer  "geodata_id"
     t.integer  "source_id",        :limit => 8
     t.string   "typ"
     t.datetime "last_comment_at"
+    t.text     "content"
   end
 
   create_table "fotos", :force => true do |t|
@@ -162,6 +177,7 @@ ActiveRecord::Schema.define(:version => 20140210191326) do
     t.integer  "status"
     t.datetime "last_comment_at"
     t.datetime "last_reminder"
+    t.string   "kommune_feld"
   end
 
   create_table "neuigkeitens", :force => true do |t|
