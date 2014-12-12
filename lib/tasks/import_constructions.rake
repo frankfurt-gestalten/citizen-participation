@@ -9,7 +9,7 @@ task :import_constructions => :environment do
       conn.request(request)
     end
 
-    doc = Nokogiri::XML(response.body)
+    doc = Nokogiri::XML(response.body, nil, 'UTF-8')
     doc.search('Ereignis').each do |item|
       Construction.create_from_xml(item, "baustelle")
       puts item
