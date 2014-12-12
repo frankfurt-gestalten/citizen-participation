@@ -1,3 +1,4 @@
+#encoding: utf-8
 
 task :import_constructions => :environment do
   urls = ['http://frankfurt-gestalten.s3.amazonaws.com/traffic/baustellen.xml']
