@@ -19,7 +19,6 @@ group :development do
   gem "better_errors"
   gem 'letter_opener'
   gem 'quiet_assets'
-  gem 'binding_of_caller'
 end
 group :development, :test do
   gem 'rspec-rails'
