@@ -51,7 +51,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem "recaptcha", :require => "recaptcha/rails"
+gem "recaptcha", :require => "recaptcha/rails", github: "ambethia/recaptcha"
 gem 'jquery-rails'
 gem 'devise'
 gem 'haml-rails'

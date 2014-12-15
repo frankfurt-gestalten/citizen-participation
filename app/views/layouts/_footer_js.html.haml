@@ -18,12 +18,6 @@
     $('#request').foundation('reveal', 'close');
     return false;
   });
-  ouibounce(document.getElementById('request'), {
-  sitewide: true,
-    callback: function() { $('#request').foundation('reveal', 'open'); }
-  });
-
-%script{:src => "https://www.google.com/recaptcha/api.js"}
 
 = yield(:footer)
 = yield(:inline_js)

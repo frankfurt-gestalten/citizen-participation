@@ -13,6 +13,12 @@ GIT
       rgeo-geojson (>= 0.2.1)
       typhoeus (= 0.3.3)
 
+GIT
+  remote: git://github.com/ambethia/recaptcha.git
+  revision: dd0eca1920adbb6530c4860c59e2cf0a469690bf
+  specs:
+    recaptcha (0.3.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -222,7 +228,6 @@ GEM
     rb-fsevent (0.9.4)
     rdoc (3.12.2)
       json (~> 1.4)
-    recaptcha (0.3.6)
     rgeo (0.3.20)
     rgeo-geojson (0.2.3)
       rgeo (>= 0.3.7)
@@ -326,7 +331,7 @@ DEPENDENCIES
   rails (= 3.2.13)
   rails_12factor
   rb-fsevent (~> 0.9.1)
-  recaptcha
+  recaptcha!
   rinku (~> 1.7)
   rollbar
   rspec-rails

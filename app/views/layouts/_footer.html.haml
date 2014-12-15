@@ -81,12 +81,3 @@
             = render "devise/shared/links"
     .large-4.columns
       = link_to "Registrieren", new_registration_path('user'), class: "button radius secondary small"
-
-      .shape
-        %h4
-          Wichtiger Hinweis für Mitglieder!
-        %p
-          Mit der Umstellung auf die neue Plattform haben wir nur die Nutzerdaten ohne Passwort übertragen. Deshalb müsst ihr noch mal ein
-          %b
-            = link_to "neues Passwort beantragen.", new_password_path('user')
-          = link_to "Bitte melden wenn es nicht klappt.", static_path('kontakt')
