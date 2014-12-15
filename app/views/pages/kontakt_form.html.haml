@@ -14,5 +14,5 @@
         = f.text_field :email, :placeholder => "E-Mail"
 
       = f.text_area :body, :rows => 20
-
+      = recaptcha_tags
       = f.submit 'Senden', :class => "button radius"
