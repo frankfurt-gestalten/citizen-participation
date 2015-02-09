@@ -79,7 +79,7 @@ gem 'heroku_rails_deflate', :group => :production
 
 # Opsworks
 gem "therubyracer", "~> 0.10.2"
-
+gem  "typhoeus"
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
