@@ -8,7 +8,7 @@ gem 'chosen-rails'
 group :production do
   gem 'pg', '0.13.2'
   gem 'unicorn'
-  gem 'rollbar'
+  gem 'rollbar', '~> 1.4.2'
   gem 'rails_12factor'
 end
 
@@ -78,7 +78,7 @@ gem 'sitemap_generator'
 gem 'heroku_rails_deflate', :group => :production
 
 # Opsworks
-gem "therubyracer", "~> 0.10.2"
+gem "therubyracer", "~> 0.12"
 gem  "typhoeus"
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
