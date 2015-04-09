@@ -74,11 +74,11 @@
                     .fa.fa-smile-o
                     .label.radius.success
                       Aktiv
-                  - elsif initiative.last_activity_at <= Date.today - 60 and initiative.last_activity_at >= Date.today - 120
+                  - elsif initiative.last_activity_at <= Date.today - 60 and initiative.last_activity_at >= Date.today - 180
                     .fa.fa-meh-o
                     .label.radius.secondary
                       Wenig aktiv
-                  - elsif initiative.last_activity_at <= Date.today - 120
+                  - elsif initiative.last_activity_at <= Date.today - 180
                     .fa.fa-frown-o
                     .label.radius.alert
                       Inaktiv
