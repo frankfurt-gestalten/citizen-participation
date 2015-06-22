@@ -6,23 +6,24 @@
 
         = select_tag 'pages_quarters', options_from_collection_for_select(all_quarters, 'id', 'name'), class: 'chosen stadtteil_dropdown', include_blank: true, data: { optional: true,placeholder: 'Stadtteil'}
     .large-7.medium-7.columns
-      %ul.button-group
-        %li
-          = link_to initiatives_path, :class => add_active_class('initiatives') do
-            Initiativen
-        -#%li
-          = link_to "Lokal", antraeges_path, :class => add_active_class('antraege')
-        -#%li
-          - unless current_user
-            = link_to "Community", '#', "data-reveal-id" => "login-window", class: "button secondary"
-          - else
-            = link_to "Community", profiles_path, :class => add_active_class('profiles')
-        %li
-          = link_to "Blog", blogs_path, :class => add_active_class('blog')
-        %li
-          = link_to "Einführung", static_path('einfuehrung'), :class => add_active_class('pages', 'show', 'slug', "ueber-uns")
-        %li.show-for-large-up
-          = link_to "Offener Haushalt", "http://haushalt.frankfurt-gestalten.de/", :class => "button secondary", :target => "_blank"
+      .button-bar
+        %ul.button-group
+          %li
+            = link_to initiatives_path, :class => add_active_class('initiatives') do
+              Initiativen
+          -#%li
+            = link_to "Lokal", antraeges_path, :class => add_active_class('antraege')
+          -#%li
+            - unless current_user
+              = link_to "Community", '#', "data-reveal-id" => "login-window", class: "button secondary"
+            - else
+              = link_to "Community", profiles_path, :class => add_active_class('profiles')
+          %li
+            = link_to "Blog", blogs_path, :class => add_active_class('blog')
+          %li
+            = link_to "Einführung", static_path('einfuehrung'), :class => add_active_class('pages', 'show', 'slug', "ueber-uns")
+          -#%li.show-for-large-up
+            = link_to "Offener Haushalt", "http://haushalt.frankfurt-gestalten.de/", :class => "button secondary", :target => "_blank"
     .large-2.medium-12.columns
       = form_tag search_path, method: :get, :class => "search-box" do
         .row.collapse
