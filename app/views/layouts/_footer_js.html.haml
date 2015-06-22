@@ -2,11 +2,6 @@
 = javascript_include_tag "application"
 :javascript
   $(document).foundation();
-  $('a.login-window').foundation('reveal');
-  $(".close-tutorial").click(function(){
-    $('#request').foundation('reveal', 'close');
-    return false;
-  });
 
 = yield(:footer)
 = yield(:inline_js)

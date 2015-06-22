@@ -27,12 +27,11 @@
     .large-2.medium-12.columns
       = form_tag search_path, method: :get, :class => "search-box" do
         .row.collapse
-          .small-9.columns
+          .small-10.columns
             = text_field_tag 'q', nil, :placeholder => "Suchen"
-          .small-3.columns
-            %span.postfix
-              %button{type: "submit", class: "button secondary"}
-                .fa.fa-search.fa-lg
+          .small-2.columns
+            %button{type: "submit", class: "button postifx secondary"}
+              .fa.fa-search.fa-lg
 .row.spacebottom
   .large-10.columns.large-centered.center
     - if flash[:notice]
