@@ -9,7 +9,8 @@
   = render "/layouts/header"
   %body{style: "background-color: #ffffff;"}
     = render 'layouts/topframe'
-    = yield
+    #wrapper{style: "background-color: #ffffff;"}
+      = yield
 
     = render "/layouts/footer"
     = render '/layouts/footer_js'
