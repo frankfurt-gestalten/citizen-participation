@@ -11,7 +11,7 @@
         %p.spacetop
           .username
             - if @initiative.user.username
-              = link_to image_tag(avatar_url(@initiative.user, 50), alt: @initiative.user.username, width: "50", height: "50", :class => "avatar"), profile_path(@initiative.user)
+              = link_to image_tag(avatar_url(@initiative.user, 50), alt: @initiative.user.username, width: '50', height: '50', class:  'avatar'), profile_path(@initiative.user)
 
               #{link_to @initiative.user.username, profile_path(@initiative.user)}
             - else
@@ -20,13 +20,13 @@
             .label.round.alert
               Nicht veröffentlicht
       .large-6.columns
-        %span.right{style: "margin: 38px 20px 0 5px;"}
+        %span.right{ style: 'margin: 38px 20px 0 5px;' }
           Akualisiert
-          = l @initiative.updated_at, :format => :short
+          = l @initiative.updated_at, format: :short
           %span.fa.fa-comments
             = @initiative.comments.count
 
-    -#%dl.sub-nav
+    -# %dl.sub-nav
       %dt
         Kategorie:
         - @initiative.categories.each do |cat|
@@ -104,7 +104,7 @@
       - if @initiative.supporters.exists? && current_user
         %ul.no-bullet#supporter
           - @initiative.supporters.each do |supporter|
-            %li.panel.larger-font{:class => "support-#{supporter.user.id}"}
+            %li.panel.larger-font{ class: 'support-#{supporter.user.id}' }
               = link_to image_tag(avatar_url(supporter.user, 25), alt: supporter.user.username, width: "25", height: "25", class: "avatar"), profile_path(supporter.user)
               = link_to supporter.user.username, profile_path(supporter.user)
 
@@ -116,13 +116,13 @@
         %h3 Termine
         - @initiative.neuigkeitens.each do |neuigkeit|
           %p
-            = l neuigkeit.datum, :format => :short
+            = l neuigkeit.datum, format: :short
             %br
             = link_to neuigkeit.title, neuigkeiten_path(neuigkeit)
           %p
             = neuigkeit.description.html_safe
-    = render 'widgets/newsletter_signup'
 
+    = render_widgets 'sidebar'
 
 - if @initiative.lat?
   = content_for :footer do

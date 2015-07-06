@@ -11,7 +11,7 @@
         = l @antraege.datum, :format => :short
         .smaller-font
           .fa.fa-clock-o
-          (#{l @antraege.aktualisiert, :format => :short})
+          (#{l @antraege.aktualisiert || @antraege.datum, :format => :short})
       .large-3.columns.spacetop
         - if @antraege.partei.present?
           Verantwortlich:
@@ -55,14 +55,16 @@
     .shape.bright-grey
       %span{:style => "float: left; margin: 7px 10px 0 0;"} Teile den Antrag
       = render 'initiatives/social_media_buttons', url: @antraege
-    .shape.bright-grey
+    -#.shape.bright-grey
       %h3
         Ich will mich einschalten!
       = link_to "Ort / Tagesordnung der nächsten Sitzung", "http://www.stvv.frankfurt.de/parlis/TO-O-" + @antraege.ob_nummer.to_s + ".htm", :class => 'small radius button secondary', target: "_blank"
       = link_to "Ansprechpartner im Ortsbeirat", "http://www.stvv.frankfurt.de/stvvorg/P_OBR_" + @antraege.ob_nummer.to_s + ".htm", :class => 'small radius button secondary', target: "_blank", :rel => "nofollow"
       %br
       = link_to "Hier kommentieren", antraege_path(@antraege, anchor: "comment"), :class => 'small radius button secondary'
-    = render 'widgets/newsletter_signup'
+
+    = render_widgets 'sidebar'
+
     .shape.bright-grey
       %h3
         Ortsbeiräte

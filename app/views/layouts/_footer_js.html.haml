@@ -1,7 +1,10 @@
+#om-vygxnltmfdthzwth-holder
 
 = javascript_include_tag "application"
 :javascript
   $(document).foundation();
+%script
+  var vygxnltmfdthzwth,vygxnltmfdthzwth_poll=function(){var r=0;return function(n,l){clearInterval(r),r=setInterval(n,l)}}();!function(e,t,n){if(e.getElementById(n)){vygxnltmfdthzwth_poll(function(){if(window['om_loaded']){if(!vygxnltmfdthzwth){vygxnltmfdthzwth=new OptinMonsterApp();return vygxnltmfdthzwth.init({u:"8516.185972",staging:0});}}},25);return;}var d=false,o=e.createElement(t);o.id=n,o.src="//a.optinmonster.com/app/js/api.min.js",o.onload=o.onreadystatechange=function(){if(!d){if(!this.readyState||this.readyState==="loaded"||this.readyState==="complete"){try{d=om_loaded=true;vygxnltmfdthzwth=new OptinMonsterApp();vygxnltmfdthzwth.init({u:"8516.185972",staging:0});o.onload=o.onreadystatechange=null;}catch(t){}}}};(document.getElementsByTagName("head")[0]||document.documentElement).appendChild(o)}(document,"script","omapi-script");
 
 = yield(:footer)
 = yield(:inline_js)
