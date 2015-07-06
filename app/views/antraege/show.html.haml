@@ -51,7 +51,7 @@
       %h3
         Was sind das hier für Dokumente?
       %p
-        Dies sind Vorlagen, die die Arbeit der Frankfurter Ortsbeiräte seit 2006 dokumentieren. Vorlagen werden von Mitgliedern (Parteien) der Ortsbeiräte eingebracht, beraten und zur Abstimmung gebracht.
+        Dies sind Vorlagen, die die Arbeit der Frankfurter Ortsbeiräte dokumentieren. Vorlagen werden von Mitgliedern (Parteien) der Ortsbeiräte eingebracht, beraten und zur Abstimmung gebracht.
     .shape.bright-grey
       %span{:style => "float: left; margin: 7px 10px 0 0;"} Teile den Antrag
       = render 'initiatives/social_media_buttons', url: @antraege
@@ -94,4 +94,3 @@
       - if @antraege.lat.present?
         var icon = L.AwesomeMarkers.icon({prefix: 'fa', icon: 'file-text', markerColor: 'blue', iconColor: '#ffffff'});
         marker = L.marker([#{@antraege.lat}, #{@antraege.long}], { icon: icon }).addTo(map);
-

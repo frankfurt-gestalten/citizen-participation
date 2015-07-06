@@ -14,21 +14,26 @@
 ActiveRecord::Schema.define(:version => 20141107215524) do
 
   create_table "antraeges", :force => true do |t|
+    t.date     "aktualisiert"
     t.string   "link"
-    t.string   "verfasser"
+    t.date     "datum"
+    t.string   "partei"
+    t.string   "nummer"
     t.text     "title"
     t.text     "begruendung"
     t.text     "content"
+    t.text     "ergebnisse"
+    t.integer  "ob_nummer"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.boolean  "check"
+    t.integer  "docid"
     t.integer  "geodata_id"
     t.string   "long"
     t.string   "lat"
-    t.datetime "last_comment_at"
-    t.integer  "docid"
     t.string   "kommune"
     t.datetime "last_updated"
+    t.datetime "last_comment_at"
   end
 
   create_table "antraeges_consultation", :force => true do |t|
@@ -95,19 +100,6 @@ ActiveRecord::Schema.define(:version => 20141107215524) do
   add_index "comments", ["ancestry"], :name => "index_comments_on_ancestry"
   add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
 
-  create_table "comtest", :id => false, :force => true do |t|
-    t.integer  "id"
-    t.text     "content"
-    t.integer  "commentable_id"
-    t.string   "commentable_type"
-    t.integer  "user_id"
-    t.string   "ancestry"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "user_name"
-    t.string   "user_email"
-  end
-
   create_table "constructions", :force => true do |t|
     t.text     "description"
     t.text     "title"
@@ -119,10 +111,10 @@ ActiveRecord::Schema.define(:version => 20141107215524) do
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.integer  "geodata_id"
+    t.text     "content"
     t.integer  "source_id",        :limit => 8
     t.string   "typ"
     t.datetime "last_comment_at"
-    t.text     "content"
   end
 
   create_table "fotos", :force => true do |t|
@@ -174,10 +166,10 @@ ActiveRecord::Schema.define(:version => 20141107215524) do
     t.boolean  "visible",         :default => true
     t.integer  "geodata_id"
     t.integer  "quarter_id"
+    t.string   "kommune_feld"
     t.integer  "status"
     t.datetime "last_comment_at"
     t.datetime "last_reminder"
-    t.string   "kommune_feld"
   end
 
   create_table "neuigkeitens", :force => true do |t|
