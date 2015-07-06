@@ -2,7 +2,6 @@ class InitiativenMailer < ActionMailer::Base
    default from: APP[:default_from]
 
   def new_comment_moderator(comment)
-    @subscriber = User.find(4)
     @initiative = comment.commentable
     @comment = comment
     @comment_author = comment.user.try(:username) || comment.user_name
