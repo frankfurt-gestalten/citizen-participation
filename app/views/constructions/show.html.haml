@@ -9,6 +9,14 @@
     %p
       = @construction.description_long.html_safe
     %p
+      %span.smaller-font
+        Diese Informationen werden Ihnen bereitgestellt von:
+        %br
+        Stadt Frankfurt am Main, Straßenverkehrsamt
+        Lizenz:
+        %a{href: "https://www.govdata.de/dl-de/by-2-0", target: "_blank"}
+          Datenlizenz Deutschland - Namensnennung - Version 2.0
+    %p
       %b
         #{pluralize(@construction.comments.count(:id), "Kommentar")}
 
