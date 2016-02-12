@@ -25,4 +25,5 @@ public/uploads/*
 *.sass-cache*
 *.scssc
 .DS_Store
-.rvmrc
+.powenv
+.ruby-version
