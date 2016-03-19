@@ -65,20 +65,13 @@ AachenGestalten::Application.configure do
 
   config.action_mailer.default_url_options = { :host => 'www.frankfurt-gestalten.de' }
 
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :postmark
+  config.action_mailer.postmark_settings = { :api_token => "dfae87bb-aee2-4293-822a-855a272c5087" }
+
+  #config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
-
- config.action_mailer.smtp_settings = {
-     :address   => "smtp.mandrillapp.com",
-     :port      => 25, # ports 587 and 2525 are also supported with STARTTLS
-     :enable_starttls_auto => true, # detects and uses STARTTLS
-     :user_name => ENV['MANDRILL_USERNAME'],
-     :password  => ENV['MANDRILL_APIKEY'], # SMTP password is any valid API key
-     :authentication => 'login', # Mandrill supports 'plain' or 'login'
-     :domain => 'www.frankfurt-gestalten.de', # your domain to identify your server when connecting
-   }
 
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
