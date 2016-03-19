@@ -66,7 +66,7 @@ AachenGestalten::Application.configure do
   config.action_mailer.default_url_options = { :host => 'www.frankfurt-gestalten.de' }
 
   config.action_mailer.delivery_method = :postmark
-  config.action_mailer.postmark_settings = { :api_token => "dfae87bb-aee2-4293-822a-855a272c5087" }
+  config.action_mailer.postmark_settings = { :api_token => "6e3a2137-b77b-4897-8b71-f5387bad1ae1" }
 
   #config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
