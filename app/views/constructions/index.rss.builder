@@ -10,7 +10,7 @@ xml.rss :version => "2.0" do
         xml.title "#{l post.start_date, :format => :short}-#{l post.end_date, :format => :short}: #{post.title}"
         xml.description post.description_long
         xml.pubDate post.created_at.to_s(:rfc822)
-        xml.link constructions_url(post)
+        xml.link construction_url(post)
         #xml.guid post_url(post)
       end
     end

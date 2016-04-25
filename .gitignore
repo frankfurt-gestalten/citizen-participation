@@ -27,3 +27,4 @@ public/uploads/*
 .DS_Store
 .powenv
 .ruby-version
+.env

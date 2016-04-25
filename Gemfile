@@ -19,6 +19,7 @@ group :development do
   gem "better_errors"
   gem 'letter_opener'
   gem 'quiet_assets'
+  gem 'dotenv-rails'
 end
 group :development, :test do
   gem 'rspec-rails'
