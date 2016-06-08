@@ -7,7 +7,7 @@ atom_feed do |feed|
       entry.title initiative.title
       entry.content initiative.content
       entry.author do |author|
-        author.name initiative.user.username
+        author.name initiative.user.username if initiative.user
       end
     end
   end
