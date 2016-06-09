@@ -105,8 +105,9 @@
         %ul.no-bullet#supporter
           - @initiative.supporters.each do |supporter|
             %li.panel.larger-font{ class: 'support-#{supporter.user.id}' }
-              = link_to image_tag(avatar_url(supporter.user, 25), alt: supporter.user.username, width: "25", height: "25", class: "avatar"), profile_path(supporter.user)
-              = link_to supporter.user.username, profile_path(supporter.user)
+              - if supporter.user
+                = link_to image_tag(avatar_url(supporter.user, 25), alt: supporter.user.username, width: "25", height: "25", class: "avatar"), profile_path(supporter.user)
+                = link_to supporter.user.username, profile_path(supporter.user)
 
       - else
         %ul.no-bullet#supporter
