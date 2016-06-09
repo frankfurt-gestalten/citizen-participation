@@ -70,19 +70,19 @@
             .shape.bright-grey
               %ul.side-nav.activity
                 %li
-                  - if initiative.last_activity_at >= Date.today - 60
+                  - if initiative.last_activity_at >= Date.today - 90
                     .fa.fa-smile-o
                     .label.radius.success
                       Aktiv
-                  - elsif initiative.last_activity_at <= Date.today - 60 and initiative.last_activity_at >= Date.today - 180
+                  - elsif initiative.last_activity_at <= Date.today - 90 and initiative.last_activity_at >= Date.today - 360
                     .fa.fa-meh-o
                     .label.radius.secondary
                       Wenig aktiv
-                  - elsif initiative.last_activity_at <= Date.today - 180
+                  - elsif initiative.last_activity_at <= Date.today - 360
                     .fa.fa-frown-o
                     .label.radius.alert
                       Inaktiv
-                  %span{"data-tooltip" => "", :class => "aktiv has-tip tip-top", :title => "Die Aktivität hängt davon ab, wann eine Initiative das letzte Mal aktualisiert oder kommentiert wurde. Aktiv: In den letzten 30 Tagen. Wenig aktiv: In den letzten 90 Tagen. Inaktiv: Darüber hinaus." }
+                  %span{"data-tooltip" => "", :class => "aktiv has-tip tip-top", :title => "Die Aktivität hängt davon ab, wann eine Initiative das letzte Mal aktualisiert oder kommentiert wurde. Aktiv: In den letzten 6 Monaten. Wenig aktiv: In den letzten 12 Monaten. Inaktiv: Darüber hinaus." }
                     Was heißt das?
                 %li
                   .fa.fa-comment
