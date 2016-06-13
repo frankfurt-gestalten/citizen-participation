@@ -10,7 +10,7 @@
       .large-6.columns
         %p.spacetop
           .username
-            - if @initiative.user.username
+            - if @initiative.user
               = link_to image_tag(avatar_url(@initiative.user, 50), alt: @initiative.user.username, width: '50', height: '50', class:  'avatar'), profile_path(@initiative.user)
 
               #{link_to @initiative.user.username, profile_path(@initiative.user)}
