@@ -15,7 +15,7 @@
 
               #{link_to @initiative.user.username, profile_path(@initiative.user)}
             - else
-              = @initiative.user.username
+              "Nutzer"
           - if @initiative.visible != true
             .label.round.alert
               Nicht veröffentlicht
